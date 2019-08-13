@@ -1,0 +1,9 @@
+<h1>You searched for:</h1>
+
+<p>{{ search_string }}</p>
+
+<p>and we found exactly that:</p>
+
+{% autoescape off %}
+{{ search_string }}
+{% endautoescape %}

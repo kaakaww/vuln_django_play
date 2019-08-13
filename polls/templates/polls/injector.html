@@ -1,0 +1,15 @@
+{% load static %}
+<html>
+<head>Ohh, hey guy!</head>
+<body>
+<li>You sent me {{ injector_str }}.</li>
+
+{% autoescape off %}
+
+I gave you back {{ injector_str }}. Happy birthday.
+
+{% endautoescape %}
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+

@@ -1,6 +1,8 @@
 stages:
   - test
+  - scan
   - deploy
+
 
 test:
   stage: test
@@ -13,3 +15,17 @@ test:
   - flake8 vuln_django --max-line-length=127
   - cd src
   - python manage.py test
+
+scan:
+  stage: test
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  before_script:
+    - docker pull stackhawk/hawkscan:rc
+  script:
+    - |
+      docker run --volume $(pwd):/hawk:rw --tty \
+        --env API_KEY="hawk.${HAWKA_API_ID}.${HAWK_API_SECRET}" \
+        --env NO_COLOR=true \
+        stackhawk/hawkscan:rc

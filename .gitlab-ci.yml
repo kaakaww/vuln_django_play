@@ -11,4 +11,5 @@ test:
   - apt-get install -y python-dev python-pip
   - pip install -r src/requirements.txt
   - flake8 vuln_django --max-line-length=127
+  - cd src
   - python manage.py test

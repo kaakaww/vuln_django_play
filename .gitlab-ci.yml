@@ -1,0 +1,12 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  script:
+  # This configures the test stuff
+  - apt-get update -qy
+  - pip install -r src/requirements.txt
+  - flake8 vuln_django --max-line-length=127
+  - python manage.py test

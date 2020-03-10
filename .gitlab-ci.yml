@@ -7,7 +7,7 @@ stages:
 
 test:
   stage: test
-  image: python:3.7-buster
+  image: docker:19.03.1
   script:
   # This configures the test stuff
   - apt-get update -qy
@@ -40,22 +40,3 @@ hawk_scan_execute:
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
-
-hawk_scan_execute:
-  stage: scan
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
-  script:
-    - |
-      docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \
-        --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
-        --env NO_COLOR=true \
-        stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
-
-
-scan_cleanup:
-  stage: scan
-  script:
-    - docker stop vuln_django
-    - docker network rm scan_net

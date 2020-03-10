@@ -1,5 +1,5 @@
 app:
-  applicationId: 12503596-6b52-4013-acd9-46a87a1f139c
+  applicationId: 12503596-6b52-4013-acd9-46a87a1f139c # This is my AppID. There are many like it, but this one is mine.
   env: Development
   # The url of your application to scan
   host: http://localhost:8020 # (required)

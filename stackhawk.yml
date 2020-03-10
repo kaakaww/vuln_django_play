@@ -1,0 +1,75 @@
+app:
+  applicationId: 12503596-6b52-4013-acd9-46a87a1f139c
+  env: Development
+  # The url of your application to scan
+  host: http://localhost:8020 # (required)
+  # Our scanner's capability is still in Alpha; If we notice a bug we'll use this email to reach out or provide a fix.
+  # We will never use this contact for marketing purposes.
+  contactEmail: scott.gerlach@sterkherk.kerm # (optional)
+  # The risk level of the app
+  riskLevel: MEDIUM # (optional)
+  # The type of data sensitivity the web app mantains
+  appDataType: PII # (optional)
+
+#  # The name of your anti csrf parameter
+  antiCsrfParam: csrfmiddelwaretoken # (optional)
+  excludePaths:
+    - "/setup.php" # The scanner resets the DB :)
+    - "/security.php" #the scanner turns on PHPIDS here
+    - "/vulnerabilities/csrf/*" #this page changes the admin password
+    - "/logout.php" # the scanner will log itself out if you don't ignore here
+#
+#  # Form POST based authentication configuration for scanning as a user.
+#  # Enabling will force the scanner to scan as an
+#  # authenticated user of your app.
+#  # Autenticated requests will pass cookies received from the form POST
+#  # to maintain authentication.
+  authentication:
+#    # A regex to match against http responses to determine if the scan user is
+#    # still logged in to your app
+    loggedInIndicator: "\\QLog Out\\E" # (required)
+#    # A regex to match against http responses to determine if the scan user is
+#    # logged out of your app
+    loggedOutIndicator: "\\Qlogin-form\\E" # (required)
+#   # A page that is only accessable being logged in. We will try to access this page
+#   # to validate authentication worked
+    testPath:
+      path: /admin/auth/user/
+      type: HEADER
+      success: ".*302.*Location: \/admin\/.*"
+#   # What kind of thing will the browser pass to the server to prove it's logged in
+    cookieAuthorization:
+      cookieNames:
+        - "token"
+    usernamePassword:
+
+      type: FORM # (optional)
+#    # The route to a form POST to authenticate a user
+      loginPath: /admin/login # (required)
+#    # The route to logout a user
+      logoutPath: /admin/logout # (required)
+#    # The username field name in your authentication form
+      usernameField: username # (required)
+#    # The password field name in your authentication form.
+      passwordField: password # (required)
+#    # Other parameters that may be required by your log in form
+      otherParams: # (optional)
+        - name: Login  # The login form parameter is needed to make login work
+          val: "Login"
+        - name: "security" #I'm not sure what this does in the app, but scans don't work without it
+          val: "low"
+#    # The username to authenticate as when scanning
+      scanUsername: admin # (required)
+#    # The password of the scanUsername
+      scanPassword: adminpassword # (required)
+hawk:
+#  # Web crawler / spider configuration
+  spider:
+#    # Enable the base spider for discovering your app's routes
+    base: true # (default)
+#    # Enable the ajax spider for discovering your single page app
+#    ajax: false # (default)
+#    # Maximum time for spider to discover routes in your app
+#    maxDurationMinutes: 2 # (default)
+#  # Maximum time to wait for the scanner to start up
+#  startupTimeoutMinutes: 5 # (default)

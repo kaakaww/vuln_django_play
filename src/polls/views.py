@@ -103,5 +103,9 @@ def sql_injector(request, ):
 @csrf_exempt
 def search(request, ):
     search_str = request.POST.get('search_string', 'found nothing in search')
-    return render(request, 'polls/search_detail.html', {'search_string': search_str, })
+    return render(request, 'polls/search_detail.html', {'search_string': search_str,})
 
+
+@csrf_exempt
+def redirect_to_polls(request, ):
+    return HttpResponseRedirect(reverse('polls:results'))

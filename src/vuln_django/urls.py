@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from vuln_django import views
 
 urlpatterns = [
+    path('', views.redirect_to_polls, name="index"),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 ]

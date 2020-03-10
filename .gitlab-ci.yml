@@ -25,7 +25,7 @@ docker-build:
   script:
     - docker build -t vuln_django:latest .
 
-scan_setup:
+hawk_scan_execute:
   stage: scan
   image: docker:19.03.1
   services:
@@ -35,13 +35,6 @@ scan_setup:
     - docker network create scan_net
     - docker pull stackhawk/hawkscan:latest
     - docker run --detach -p 8020:8020 --name vuln_django --rm --network scan_net vuln_django:latest
-
-hawk_scan_execute:
-  stage: scan
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
-  script:
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \

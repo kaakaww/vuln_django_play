@@ -31,9 +31,10 @@ scan_setup:
   services:
     - docker:19.03.1-dind
   script:
+    - docker build -t vuln_django:latest .
     - docker network create scan_net
     - docker pull stackhawk/hawkscan:latest
-    - docker run --detach --name vuln_django --rm --network scan_net vuln_django
+    - docker run --detach -p 8020:8020 --name vuln_django --rm --network scan_net vuln_django:latest
 
 hawk_scan_execute:
   stage: scan

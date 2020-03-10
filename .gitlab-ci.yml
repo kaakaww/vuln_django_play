@@ -28,6 +28,8 @@ docker-build:
 scan_setup:
   stage: scan
   image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
   script:
     - docker network create scan_net
     - docker pull stackhawk/hawkscan:latest
@@ -36,6 +38,8 @@ scan_setup:
 hawk_scan_execute:
   stage: scan
   image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
   script:
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \

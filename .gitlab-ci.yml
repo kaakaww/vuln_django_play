@@ -20,7 +20,7 @@ test:
 docker-build:
   stage: build
   image: docker:19.03.1
-  service:
+  services:
     - docker:19.03.1-dind
   script:
     - docker build -t vuln_django .

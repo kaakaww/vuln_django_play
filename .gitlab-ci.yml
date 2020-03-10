@@ -7,7 +7,7 @@ stages:
 
 test:
   stage: test
-  image: docker:19.03.1
+  image: python:3.7-buster
   script:
   # This configures the test stuff
   - apt-get update -qy

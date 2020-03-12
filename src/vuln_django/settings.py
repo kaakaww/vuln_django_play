@@ -25,7 +25,7 @@ SECRET_KEY = 'mnu_5q!2b^cesn9w+gfulw2d4ogj5o^s#54anr3+w!k_xkhcti'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'vuln-django']
 
 
 # Application definition

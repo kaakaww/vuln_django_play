@@ -14,10 +14,7 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddelwaretoken # (optional)
   excludePaths:
-    - "/setup.php" # The scanner resets the DB :)
-    - "/security.php" #the scanner turns on PHPIDS here
-    - "/vulnerabilities/csrf/*" #this page changes the admin password
-    - "/logout.php" # the scanner will log itself out if you don't ignore here
+    - "/admin/logout" # the scanner will log itself out if you don't ignore here
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an

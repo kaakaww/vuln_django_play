@@ -40,7 +40,7 @@ hawk_scan_execute:
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
-        --env BRANCH="${CI_COMMIT_BRANCH}" \
+        --env BRANCH=GITLAB-${CI_COMMIT_BRANCH} \
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
 
@@ -66,7 +66,7 @@ zap_scan_execute:
     - docker network create scan_net
     - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
     - |
-      docker run --network scan_net --rm --it \
+      docker run --network scan_net --rm --interactive --tty \
         --volume $(pwd)/wrk:/zap/wrk:rw \
         --volume $(pwd)/wrk:/output:rw \
         registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze \

@@ -2,6 +2,7 @@ stages:
   - test
   - build
   - scan
+  - dast
   - deploy
 
 

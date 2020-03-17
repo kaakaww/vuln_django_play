@@ -40,12 +40,10 @@ hawk_scan_execute:
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
-        --env BRANCH=GITLAB-${CI_COMMIT_BRANCH} \
+        --env BRANCH=GITLAB:${CI_COMMIT_BRANCH} \
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
 
-include:
-  - template: DAST.gitlab-ci.yml
 
 zap_scan_execute:
   stage: dast
@@ -67,7 +65,14 @@ zap_scan_execute:
     - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
     - |
       docker run --network scan_net --rm --interactive --tty \
+        -t ${DAST_WEBSITE} \
+        --auth-url ${DAST_AUTH_URL} \
+        --auth-username ${DAST_USERNAME} \
+        --auth-password ${DAST_PASSWORD} \
+        --auth-username-field ${DAST_USERNAME_FIELD} \
+        --auth-password-field ${DAST_PASSWORD_FIELD}\
+        --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
         --volume $(pwd)/wrk:/zap/wrk:rw \
         --volume $(pwd)/wrk:/output:rw \
-        registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze \
+        registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /zap-full-scan \
         -r report.html

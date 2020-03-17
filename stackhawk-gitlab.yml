@@ -1,4 +1,4 @@
 app:
-  env: GitLab-${BRANCH:ci}
+  env: GitLab-"${BRANCH:ci}"
   # The url of your application to scan
   host: http://vuln-django:8020 # (required)

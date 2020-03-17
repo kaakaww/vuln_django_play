@@ -38,5 +38,6 @@ hawk_scan_execute:
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm --network scan_net \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
+        --env BRANCH=$CI_COMMIT_BRANCH
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml

@@ -64,7 +64,7 @@ zap_scan_execute:
     - docker network create scan_net
     - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
     - |
-      docker run --interactive --rm  --network scan_net \
+      docker run --rm  --network scan_net \
         -t ${DAST_WEBSITE} \
         --auth-url ${DAST_AUTH_URL} \
         --auth-username ${DAST_USERNAME} \

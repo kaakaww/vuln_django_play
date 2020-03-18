@@ -48,9 +48,9 @@ include:
   template: DAST.gitlab-ci.yml
 
 dast:
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
+  #image: docker:19.03.1
+  #services:
+  #  - docker:19.03.1-dind
   stage: dast
   variables:
     DAST_WEBSITE: http://vuln-django
@@ -63,9 +63,9 @@ dast:
     DAST_FULL_SCAN_ENABLED: "true"
     GIT_STRATEGY: fetch
   script:
-  - docker build -t vuln_django:latest .
-  - docker network create scan_net
-  - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
+  #- docker build -t vuln_django:latest .
+  #- docker network create scan_net
+  #- docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
   - /analyze --help
 
 

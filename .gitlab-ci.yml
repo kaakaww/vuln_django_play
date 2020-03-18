@@ -49,8 +49,8 @@ include:
 
 dast:
   #image: docker:19.03.1
-  #services:
-  #  - docker:19.03.1-dind
+  services:
+    - docker:19.03.1-dind
   stage: dast
   variables:
     DAST_WEBSITE: http://vuln-django

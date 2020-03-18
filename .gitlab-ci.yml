@@ -56,6 +56,9 @@ variables:
   DAST_AUTH_EXCLUDE_URLS: http://vuln-django/admin/logout
   DAST_FULL_SCAN_ENABLED: "true"
 dast:
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
   stage: dast
   script:
   - docker build -t vuln_django:latest .

@@ -25,7 +25,7 @@ stages:
 #   services:
 #     - docker:19.03.1-dind
 #   script:
-    - docker build -t vuln_django:latest .
+#    - docker build -t vuln_django:latest .
 #
 # hawk_scan_execute:
 #   stage: scan

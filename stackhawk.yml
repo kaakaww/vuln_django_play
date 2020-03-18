@@ -14,7 +14,7 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddelwaretoken # (optional)
   excludePaths:
-    - "/admin/logout" # the scanner will log itself out if you don't ignore here
+    - "/admin/logout/" # the scanner will log itself out if you don't ignore here
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an
@@ -42,19 +42,17 @@ app:
 
       type: FORM # (optional)
 #    # The route to a form POST to authenticate a user
-      loginPath: /admin/login # (required)
+      loginPath: /admin/login/ # (required)
 #    # The route to logout a user
-      logoutPath: /admin/logout # (required)
+      logoutPath: /admin/logout/ # (required)
 #    # The username field name in your authentication form
       usernameField: username # (required)
 #    # The password field name in your authentication form.
       passwordField: password # (required)
 #    # Other parameters that may be required by your log in form
       otherParams: # (optional)
-        - name: Login  # The login form parameter is needed to make login work
-          val: "Login"
-        - name: "security" #I'm not sure what this does in the app, but scans don't work without it
-          val: "low"
+        - name: next  # The login form parameter is needed to make login work
+          val: "/admin/"
 #    # The username to authenticate as when scanning
       scanUsername: admin # (required)
 #    # The password of the scanUsername

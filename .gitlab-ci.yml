@@ -68,13 +68,13 @@ dast:
     - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
     - docker pull registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest}
     - |
-      docker run --rm  --network scan_net -t ${DAST_WEBSITE} \
-               --auth-url ${DAST_AUTH_URL} \
-               --auth-username ${DAST_USERNAME} \
-               --auth-password ${DAST_PASSWORD} \
-               --auth-username-field ${DAST_USERNAME_FIELD} \
-               --auth-password-field ${DAST_PASSWORD_FIELD}\
-               --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
+      docker run --rm  --network scan_net -t $DAST_WEBSITE \
+               --auth-url $DAST_AUTH_URL \
+               --auth-username $DAST_USERNAME \
+               --auth-password $DAST_PASSWORD \
+               --auth-username-field $DAST_USERNAME_FIELD \
+               --auth-password-field $DAST_PASSWORD_FIELD\
+               --auth-exclude-urls $DAST_AUTH_EXCLUDE_URLS \
                --volume $(pwd)/wrk:/zap/wrk:rw \
                --volume $(pwd)/wrk:/output:rw \
                dast /zap-full-scan \

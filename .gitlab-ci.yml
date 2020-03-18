@@ -63,10 +63,10 @@ dast:
     DAST_FULL_SCAN_ENABLED: "true"
     GIT_STRATEGY: fetch
   script:
-  #- docker build -t vuln_django:latest .
+    - docker build -t vuln_django:latest .
   #- docker network create scan_net
   #- docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
-  - /analyze --help
+    - /analyze --help
 
 
 # zap_scan_execute:

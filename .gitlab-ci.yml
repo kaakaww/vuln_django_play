@@ -7,24 +7,24 @@ stages:
 
 
 
-test:
-  stage: test
-  image: python:3.7-buster
-  script:
-  # This configures the test stuff
-  - apt-get update -qy
-  - apt-get install -y python-dev python-pip
-  - pip install -r src/requirements.txt
-  - flake8 vuln_django --max-line-length=127
-  - cd src
-  - python manage.py test
+# test:
+#   stage: test
+#   image: python:3.7-buster
+#   script:
+#   # This configures the test stuff
+#   - apt-get update -qy
+#   - apt-get install -y python-dev python-pip
+#   - pip install -r src/requirements.txt
+#   - flake8 vuln_django --max-line-length=127
+#   - cd src
+#   - python manage.py test
 
-docker-build:
-  stage: build
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
-  script:
+# docker-build:
+#   stage: build
+#   image: docker:19.03.1
+#   services:
+#     - docker:19.03.1-dind
+#   script:
     - docker build -t vuln_django:latest .
 #
 # hawk_scan_execute:
@@ -48,7 +48,7 @@ include:
   template: DAST.gitlab-ci.yml
 
 dast:
-  #image: docker:19.03.1
+  image: docker:19.03.1
   services:
     - docker:19.03.1-dind
   stage: dast
@@ -64,9 +64,21 @@ dast:
     GIT_STRATEGY: fetch
   script:
     - docker build -t vuln_django:latest .
-  #- docker network create scan_net
-  #- docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
-    - /analyze --help
+    - docker network create scan_net
+    - docker run --detach -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
+    - |
+      docker run --rm  --network scan_net \
+               -t ${DAST_WEBSITE} \
+               --auth-url ${DAST_AUTH_URL} \
+               --auth-username ${DAST_USERNAME} \
+               --auth-password ${DAST_PASSWORD} \
+               --auth-username-field ${DAST_USERNAME_FIELD} \
+               --auth-password-field ${DAST_PASSWORD_FIELD}\
+               --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
+               --volume $(pwd)/wrk:/zap/wrk:rw \
+               --volume $(pwd)/wrk:/output:rw \
+               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /zap-full-scan \
+               -r report.html
 
 
 # zap_scan_execute:

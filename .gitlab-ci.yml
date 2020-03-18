@@ -75,7 +75,7 @@ dast:
                --auth-password 'adminpassword' \
                --auth-username-field 'username' \
                --auth-password-field 'password' \
-               --auth-exclude-urls 'http://vuln-django/admin/logout/'' \
+               --auth-exclude-urls 'http://vuln-django/admin/logout/' \
                --volume $(pwd)/wrk:/zap/wrk:rw \
                --volume $(pwd)/wrk:/output:rw \
                -r report.html

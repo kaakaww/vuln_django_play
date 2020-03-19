@@ -71,7 +71,7 @@ dast:
     - |
       docker run --rm  --link vuln-django:vuln-django --network scan_net --volume $(pwd)/wrk:/zap/wrk:rw \
                --volume $(pwd)/wrk:/output:rw \
-               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t $DAST_WEBSITE' \
+               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t $DAST_WEBSITE \
                --auth-url 'http://vuln-django:8020/admin/login/' \
                --auth-username 'admin' \
                --auth-password 'adminpassword' \

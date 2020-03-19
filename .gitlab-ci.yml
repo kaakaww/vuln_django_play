@@ -27,31 +27,28 @@ stages:
 #   script:
 #    - docker build -t vuln_django:latest .
 #
-# hawk_scan_execute:
-#   stage: scan
-#   image: docker:19.03.1
-#   services:
-#     - docker:19.03.1-dind
-#   script:
-#     - docker build -t vuln_django:latest .
-#     - docker network create scan_net
-#     - docker pull stackhawk/hawkscan:latest
-#     - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
-#     - |
-#       docker run --link vuln-django:vuln-django --volume $(pwd):/hawk:rw --tty --rm \
-#         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
-#         --env BRANCH=GitLab:${CI_COMMIT_BRANCH} \
-#         --env NO_COLOR=true \
-#         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
-
-include:
-  template: DAST.gitlab-ci.yml
-
-dast:
+hawk_scan_execute:
+  stage: scan
   image: docker:19.03.1
   services:
     - docker:19.03.1-dind
-  stage: dast
+  script:
+    - docker build -t vuln_django:latest .
+    - docker network create scan_net
+    - docker pull stackhawk/hawkscan:latest
+    - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
+    - |
+      docker run --link vuln-django:vuln-django --volume $(pwd):/hawk:rw --tty --rm \
+        --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
+        --env BRANCH=GitLab:${CI_COMMIT_BRANCH} \
+        --env NO_COLOR=true \
+        stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
+
+gitlab-scan:
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  stage: scan
   variables:
     DAST_WEBSITE: http://vuln-django:8020
     DAST_AUTH_URL: /admin/login/
@@ -73,12 +70,12 @@ dast:
                --volume $(pwd)/wrk:/output:rw \
                registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t ${DAST_WEBSITE} \
                --auth-url ${DAST_WEBSITE}${DAST_AUTH_URL} \
-               --auth-username 'admin' \
-               --auth-password 'adminpassword' \
-               --auth-username-field 'username' \
-               --auth-password-field 'password' \
-               --auth-exclude-urls 'http://vuln-django:8020/admin/logout/' \
-               --full-scan 'true'
+               --auth-username ${DAST_USERNAME} \
+               --auth-password ${DAST_PASSWORD} \
+               --auth-username-field ${DAST_USERNAME_FIELD} \
+               --auth-password-field ${DAST_PASSWORD_FIELD} \
+               --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
+               --full-scan ${DASTFULL_SCAN_ENABLED}
                -r report.html
 
 

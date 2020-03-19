@@ -76,7 +76,7 @@ gitlab-scan:
                --auth-username-field ${DAST_USERNAME_FIELD} \
                --auth-password-field ${DAST_PASSWORD_FIELD} \
                --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
-               --full-scan ${DAST_FULL_SCAN_ENABLED}
+               --full-scan ${DAST_FULL_SCAN_ENABLED} \
                -r report.html
 
 

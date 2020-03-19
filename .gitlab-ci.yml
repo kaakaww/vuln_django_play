@@ -38,7 +38,7 @@ hawk_scan_execute:
     - docker pull stackhawk/hawkscan:latest
     - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
     - |
-      docker run --link vuln-django:vuln-django --volume $(pwd):/hawk:rw --tty --rm \
+      docker run --network scan_net --volume $(pwd):/hawk:rw --tty --rm \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         --env BRANCH=GitLab:${CI_COMMIT_BRANCH} \
         --env NO_COLOR=true \

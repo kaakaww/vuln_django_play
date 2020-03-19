@@ -7,27 +7,27 @@ stages:
 
 
 
-# test:
-#   stage: test
-#   image: python:3.7-buster
-#   script:
-#   # This configures the test stuff
-#   - apt-get update -qy
-#   - apt-get install -y python-dev python-pip
-#   - pip install -r src/requirements.txt
-#   - flake8 vuln_django --max-line-length=127
-#   - cd src
-#   - python manage.py migrate
-#   - python manage.py test
+test:
+  stage: test
+  image: python:3.7-buster
+  script:
+  # This configures the test stuff
+  - apt-get update -qy
+  - apt-get install -y python-dev python-pip
+  - pip install -r src/requirements.txt
+  - flake8 vuln_django --max-line-length=127
+  - cd src
+  - python manage.py migrate
+  - python manage.py test
 
-# docker-build:
-#   stage: build
-#   image: docker:19.03.1
-#   services:
-#     - docker:19.03.1-dind
-#   script:
-#    - docker build -t vuln_django:latest .
-#
+docker-build:
+  stage: build
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  script:
+   - docker build -t vuln_django:latest .
+
 hawk_scan_execute:
   stage: scan
   image: docker:19.03.1

@@ -71,19 +71,15 @@ dast:
     - |
       docker run --rm  --network scan_net --volume $(pwd)/wrk:/zap/wrk:rw \
                --volume $(pwd)/wrk:/output:rw \
-               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /bin/sh -c "ping vuln-django"
-    # - |
-    #   docker run --rm  --network scan_net --volume $(pwd)/wrk:/zap/wrk:rw \
-    #            --volume $(pwd)/wrk:/output:rw \
-    #            registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t 'http://vuln-django' \
-    #            --auth-url 'http://vuln-django/admin/login/' \
-    #            --auth-username 'admin' \
-    #            --auth-password 'adminpassword' \
-    #            --auth-username-field 'username' \
-    #            --auth-password-field 'password' \
-    #            --auth-exclude-urls 'http://vuln-django/admin/logout/' \
-    #            --full-scan 'true'
-    #            -r report.html
+               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t 'http://vuln-django:8020' \
+               --auth-url 'http://vuln-django:8020/admin/login/' \
+               --auth-username 'admin' \
+               --auth-password 'adminpassword' \
+               --auth-username-field 'username' \
+               --auth-password-field 'password' \
+               --auth-exclude-urls 'http://vuln-django:8020/admin/logout/' \
+               --full-scan 'true'
+               -r report.html
 
 
 # zap_scan_execute:

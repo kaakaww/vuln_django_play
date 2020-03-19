@@ -34,9 +34,9 @@ stages:
 #     - docker:19.03.1-dind
 #   script:
 #     - docker build -t vuln_django:latest .
-#     #- docker network create scan_net
+#     - docker network create scan_net
 #     - docker pull stackhawk/hawkscan:latest
-#     - docker run --detach -p 8020:8020 --name vuln-django --rm vuln_django:latest
+#     - docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
 #     - |
 #       docker run --link vuln-django:vuln-django --volume $(pwd):/hawk:rw --tty --rm \
 #         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
@@ -53,7 +53,7 @@ dast:
     - docker:19.03.1-dind
   stage: dast
   variables:
-    DAST_WEBSITE: http://vuln-django
+    DAST_WEBSITE: http://vuln-django:8020
     DAST_AUTH_URL: /admin/login/
     DAST_USERNAME: admin
     DAST_PASSWORD: adminpassword
@@ -65,7 +65,7 @@ dast:
   script:
     - docker build -t vuln_django:latest .
     - docker network create scan_net
-    - docker run --detach  --network scan_net --name vuln-django --rm vuln_django:latest
+    - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
     #- docker pull registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest}
     - export DAST_WEBSITE=${DAST_WEBSITE}
     - |

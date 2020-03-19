@@ -69,7 +69,7 @@ dast:
     - docker pull registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest}
     - export DAST_WEBSITE=${DAST_WEBSITE}
     - |
-      docker run --rm  --network scan_net registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /zap/analyze -t 'http://vuln-django' \
+      docker run --rm  --network scan_net registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t 'http://vuln-django' \
                --auth-url 'http://vuln-django/admin/login/' \
                --auth-username 'admin' \
                --auth-password 'adminpassword' \

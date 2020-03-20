@@ -12,7 +12,7 @@ app:
   appDataType: PII # (optional)
 
 #  # The name of your anti csrf parameter
-  antiCsrfParam: csrfmiddelwaretoken # (optional)
+  antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
     - "/admin/logout/" # the scanner will log itself out if you don't ignore here
 #
@@ -33,11 +33,12 @@ app:
     testPath:
       path: /admin/auth/user/
       type: HEADER
-      success: ".*302.*Location: \/admin\/.*"
+      success: ".*200.*"
 #   # What kind of thing will the browser pass to the server to prove it's logged in
     cookieAuthorization:
       cookieNames:
         - "token"
+        - "csrftoken"
     usernamePassword:
 
       type: FORM # (optional)

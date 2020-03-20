@@ -1,9 +1,21 @@
-<h1>You searched for:</h1>
+{% extends "public/base.html" %}
+{% block title %}{{ question.questions_text }}{% endblock %}
 
-<p>{{ search_string }}</p>
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h1>You searched for:</h1>
+ </div>
+</div>
+<div class="row">
+  <div class="col">
+    <p>{{ search_string }}</p>
 
-<p>and we found exactly that:</p>
+    <p>and we found exactly that:</p>
 
-{% autoescape off %}
-{{ search_string }}
-{% endautoescape %}
+    {% autoescape off %}
+    {{ search_string }}
+    {% endautoescape %}
+  </div>
+</div>
+{% endblock %}

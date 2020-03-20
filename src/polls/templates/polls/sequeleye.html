@@ -1,0 +1,33 @@
+{% extends "public/base.html" %}
+{% block title %}{{ "Ohh hey!" }}{% endblock %}
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class="col"><h1>This page allows you to make DB queries</h1></div>
+</div>
+<div class="row">
+  <div class="col"<li>You sent me '{{ sql_str }}'.</li></div>
+</div>
+<div class="row">
+  <div class="col">
+    {% autoescape off %}
+
+    I gave you back {{ sql_results }}.
+
+    {% endautoescape %}
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col">
+    Try Again?:
+    <form class="form" method="get" action="/polls/sql/">
+      <div class="form-group">
+        <label for="DB query">DB Query</label>
+        <input type="string" class="form-control" id="DB query" aria-describedby="SQLi">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}

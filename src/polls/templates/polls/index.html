@@ -1,28 +1,43 @@
-{% load static %}
+{% extends "public/base.html" %}
+
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block content %}
 {% autoescape off %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
 
 {% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.questions_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+<div class="row">
+  <div class="col">
+    <h2>The Latest Questions</h2>
+      <ul>
+      {% for question in latest_question_list %}
+          <li><a href="{% url 'polls:detail' question.id %}">{{ question.questions_text }}</a></li>
+      {% endfor %}
+      </ul>
+  {% else %}
+      <p>No polls are available.</p>
+  {% endif %}
 
+  </div>
+</div>
 {% endautoescape %}
+<div class="row">
+  <div class="col">
+  <p>Also, if you'd like to pwnt me, check out these links?<br>
+  <a href="{% url 'polls:inject' 'rando_stuff' %}">The Injector Page</a></p>
 
-<p>Also, if you'd like to pwnt me, check out these links</p>
-<a href="{% url 'polls:inject' 'rando_stuff' %}">The Injector Page</a>
+  <p>Want to run some DB queries?<br>
+  <a href="{% url 'polls:sqlinject' %}?sql=SELECT name FROM sqlite_master WHERE type='table'">The SQL Injector Page</a></p>
+</div>
 
-<p>Want to run some DB queries?</p>
-<a href="{% url 'polls:sqlinject' %}?sql=SELECT name FROM sqlite_master WHERE type='table'">The SQL Injector Page</a>
-
-<p>also if you'd like to search for some stuff do it here</p>
-<form action="{% url 'polls:search' %}" method="post">
-    <input type="text" name="search_string" id="search_string" value="">
-    <input type="submit" value="Search">
-</form>
+  <div class="col">
+    <p>also if you'd like to search for some stuff do it here</p>
+    <form action="{% url 'polls:search' %}" method="post">
+      <input type="text" name="search_string" id="search_string" value="">
+      <input type="submit" value="Search">
+    </form>
+  </div>
+</div>
+{% endblock %}

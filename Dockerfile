@@ -22,7 +22,8 @@ ENV DJANGO_SUPERUSER_USERNAME=admin
 ENV DJANGO_SUPERUSER_PASSWORD=adminpassword
 ENV DJANGO_SUPERUSER_EMAIL=admin@example.com
 RUN python vuln_django/manage.py createsuperuser --no-input
-
+RUN chown -R www-data:www-data /opt/app
+RUN python vuln_django/manage.py seed polls --number=5
 
 EXPOSE 8020
 STOPSIGNAL SIGTERM

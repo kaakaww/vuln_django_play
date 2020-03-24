@@ -33,7 +33,7 @@ app:
     testPath:
       path: /admin/auth/user/
       type: HEADER
-      success: ".*302.*/admin/login/.*"
+      success: ".*200.*"
 #   # What kind of thing will the browser pass to the server to prove it's logged in
     cookieAuthorization:
       cookieNames:

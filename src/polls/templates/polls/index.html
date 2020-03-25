@@ -6,10 +6,9 @@
 {% autoescape off %}
 
 
-
-{% if latest_question_list %}
 <div class="row">
   <div class="col">
+{% if latest_question_list %}
     <h2>The Latest Questions</h2>
       <ul>
       {% for question in latest_question_list %}

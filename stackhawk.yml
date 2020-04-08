@@ -2,7 +2,7 @@ app:
   applicationId: 12503596-6b52-4013-acd9-46a87a1f139c # This is my AppID. There are many like it, but this one is mine.
   env: Development
   # The url of your application to scan
-  host: http://localhost:8020 # (required)
+  host: ${HOST:http://localhost:8020} # (required)
   # Our scanner's capability is still in Alpha; If we notice a bug we'll use this email to reach out or provide a fix.
   # We will never use this contact for marketing purposes.
   contactEmail: scott.gerlach@sterkherk.kerm # (optional)

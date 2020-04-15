@@ -1,0 +1,25 @@
+version: 2.1
+
+orbs:
+  stackhawk: stackhawk/stackhawk@0.0.1
+
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build the vulnerable Django app
+          command: docker build -t vuln_django:latest .
+      - run:
+          name: Create a scan network so we can address containers by name
+          command: docker network create scan_net
+      - run:
+          name: Run the vulnerable Django app
+          command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
+      - stackhawk/hawkscan:
+          api_key: "${TEST_API_KEY}"
+          auth_endpoint: https://auth.test.stackhawk.com
+          results_endpoint: https://api.test.stackhawk.com/api/v1
+          configuration_files: ./stackhawk.yml ./stackhawk-circleci.yml
+          docker_network: scan_net

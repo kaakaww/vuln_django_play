@@ -1,4 +1,4 @@
 app:
-  applicationId: ${APP_ID:f195cffd-dd0b-4007-88c6-a2a126019c40}
+  applicationId: ${APP_ID:2bd303e8-a0d0-46b6-8306-5fc552d79d6a}
   env: ${CIRCLE_BRANCH:circleci}
   host: http://vuln-django:8020

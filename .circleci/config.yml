@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  stackhawk: stackhawk/stackhawk@0.0.1
+  stackhawk: stackhawk/stackhawk@dev:alpha
 
 jobs:
   build:
@@ -19,7 +19,10 @@ jobs:
           command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
       - stackhawk/hawkscan:
           api_key: "${TEST_API_KEY}"
-          auth_endpoint: https://auth.test.stackhawk.com
-          results_endpoint: https://api.test.stackhawk.com/api/v1
-          configuration_files: ./stackhawk.yml ./stackhawk-circleci.yml
-          docker_network: scan_net
+          auth-endpoint: https://auth.test.stackhawk.com
+          results-endpoint: https://api.test.stackhawk.com/api/v1
+          configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
+          docker-network: scan_net
+          app-id: 2bd303e8-a0d0-46b6-8306-5fc552d79d6a
+          host: http://vuln-django:8020
+          env: "${CIRCLE_BRANCH}"

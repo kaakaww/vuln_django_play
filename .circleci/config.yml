@@ -18,7 +18,7 @@ jobs:
           name: Run the vulnerable Django app
           command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
       - stackhawk/hawkscan:
-          api_key: "${TEST_API_KEY}"
+          api-key: "${TEST_API_KEY}"
           auth-endpoint: https://auth.test.stackhawk.com
           results-endpoint: https://api.test.stackhawk.com/api/v1
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml

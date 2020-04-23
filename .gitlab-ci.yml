@@ -22,9 +22,9 @@ test:
 unit-tests:
     stage: test
     script:
-      - coverage run --source='.' manage.py test
-      - coverage report -m
-      - coverage-badge
+      - /bin/coverage run --source='.' manage.py test
+      - /bin/coverage report -m
+      - /bin/coverage-badge
     coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
 
 docker-build:

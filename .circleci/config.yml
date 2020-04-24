@@ -15,7 +15,8 @@ workflows:
                 name: Build Vulny Django
                 command: docker build -t vulny_django:latest .
             - run:
+                name: Create scan_net Network
+                command: docker network create scan_net
+            - run:
                 name: Run Vulny Django
-                command: |
-                  docker network create scan_net
-                  docker run --detach --network scan_net --name vulny-django --rm vulny_django:latest
+                command: docker run --detach --network scan_net --name vulny-django --rm vulny_django:latest

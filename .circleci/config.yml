@@ -1,22 +1,21 @@
 version: 2.1
 
 orbs:
-  stackhawk: stackhawk/stackhawk@dev:alpha
+  stackhawk: stackhawk/stackhawk@1.0.0
 
 workflows:
-  build-n-scan:
+  build-and-scan:
     jobs:
       - stackhawk/hawkscan-local:
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
           docker-network: scan_net
-          env: "${CIRCLE_BRANCH}"
+          app-id: 685847dd-0a74-4f02-b4d2-53f2396c93ed
           steps:
             - run:
-                name: Build the vulnerable Django app
-                command: docker build -t vuln_django:latest .
+                name: Build Vulny Django
+                command: docker build -t vulny_django:latest .
             - run:
-                name: Create a scan network so we can address containers by name
-                command: docker network create scan_net
-            - run:
-                name: Run the vulnerable Django app
-                command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
+                name: Run Vulny Django
+                command: |
+                  docker network create scan_net
+                  docker run --detach --network scan_net --name vulny-django --rm vulny_django:latest

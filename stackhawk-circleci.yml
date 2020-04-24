@@ -1,4 +1,3 @@
 app:
-  applicationId: ${APP_ID:d023acb5-c8d4-426d-a572-148bfea653b4}
-  env: ${ENV:circleci}
-  host: ${HOST:http://vuln-django:8020}
+  applicationId: ${APP_ID}
+  host: http://vulny-django:8020

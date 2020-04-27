@@ -41,7 +41,7 @@ hawk_scan_execute:
     - docker:19.03.1-dind
   script:
     - env
-    - ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'
+    - ip -4 addr show docker0
     - docker build -t vuln_django:latest .
     #- docker network create scan_net
     #- docker pull stackhawk/hawkscan:latest
@@ -55,38 +55,38 @@ hawk_scan_execute:
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
 
-gitlab-scan:
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
-  stage: scan
-  variables:
-    DAST_WEBSITE: http://vuln-django:8020
-    DAST_AUTH_URL: /admin/login/
-    DAST_USERNAME: admin
-    DAST_PASSWORD: adminpassword
-    DAST_USERNAME_FIELD: username
-    DAST_PASSWORD_FIELD: password
-    DAST_AUTH_EXCLUDE_URLS: http://vuln-django/admin/logout/
-    DAST_FULL_SCAN_ENABLED: "true"
-    GIT_STRATEGY: fetch
-  script:
-    - docker build -t vuln_django:latest .
-    - docker network create scan_net
-    - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
-    - export DAST_WEBSITE=${DAST_WEBSITE}
-    - |
-      docker run --rm  --link vuln-django:vuln-django --network scan_net --volume $(pwd)/wrk:/zap/wrk:rw \
-               --volume $(pwd)/wrk:/output:rw \
-               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t ${DAST_WEBSITE} \
-               --auth-url ${DAST_WEBSITE}${DAST_AUTH_URL} \
-               --auth-username ${DAST_USERNAME} \
-               --auth-password ${DAST_PASSWORD} \
-               --auth-username-field ${DAST_USERNAME_FIELD} \
-               --auth-password-field ${DAST_PASSWORD_FIELD} \
-               --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
-               --full-scan ${DAST_FULL_SCAN_ENABLED} \
-               -r report.html
+#gitlab-scan:
+#  image: docker:19.03.1
+#  services:
+#    - docker:19.03.1-dind
+#  stage: scan
+#  variables:
+#    DAST_WEBSITE: http://vuln-django:8020
+#    DAST_AUTH_URL: /admin/login/
+#    DAST_USERNAME: admin
+#    DAST_PASSWORD: adminpassword
+#    DAST_USERNAME_FIELD: username
+#    DAST_PASSWORD_FIELD: password
+#    DAST_AUTH_EXCLUDE_URLS: http://vuln-django/admin/logout/
+#    DAST_FULL_SCAN_ENABLED: "true"
+#    GIT_STRATEGY: fetch
+#  script:
+#    - docker build -t vuln_django:latest .
+#    - docker network create scan_net
+#    - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
+#    - export DAST_WEBSITE=${DAST_WEBSITE}
+#    - |
+#      docker run --rm  --link vuln-django:vuln-django --network scan_net --volume $(pwd)/wrk:/zap/wrk:rw \
+#               --volume $(pwd)/wrk:/output:rw \
+#               registry.gitlab.com/gitlab-org/security-products/dast:${VERSION:-latest} /analyze -t ${DAST_WEBSITE} \
+#               --auth-url ${DAST_WEBSITE}${DAST_AUTH_URL} \
+#               --auth-username ${DAST_USERNAME} \
+#               --auth-password ${DAST_PASSWORD} \
+#               --auth-username-field ${DAST_USERNAME_FIELD} \
+#               --auth-password-field ${DAST_PASSWORD_FIELD} \
+#               --auth-exclude-urls ${DAST_AUTH_EXCLUDE_URLS} \
+#               --full-scan ${DAST_FULL_SCAN_ENABLED} \
+#               -r report.html
 
 
 # zap_scan_execute:

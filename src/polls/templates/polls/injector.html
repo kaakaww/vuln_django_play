@@ -1,15 +1,20 @@
+{% extends "public/base.html" %}
+{% block title %}{{ "Ohh hey!" }}{% endblock %}
 {% load static %}
-<html>
-<head>Ohh, hey guy!</head>
-<body>
-<li>You sent me {{ injector_str }}.</li>
+{% block content %}
+<div class="row">
+  <div class="col"><h1>This page displays stuff from the url</h1></div>
+</div>
+<div class="row">
+  <div class="col"<li>You sent me {{ injector_str }}.</li></div>
+</div>
+<div class="row">
+  <div class="col">
+    {% autoescape off %}
 
-{% autoescape off %}
+    I gave you back {{ injector_str }}. Happy birthday.
 
-I gave you back {{ injector_str }}. Happy birthday.
-
-{% endautoescape %}
-</body>
-</html>
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-
+    {% endautoescape %}
+  </div>
+</div>
+{% endblock %}

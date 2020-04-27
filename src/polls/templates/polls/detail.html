@@ -1,12 +1,22 @@
-<h1>{{ question.questions_text }}</h1>
+{% extends "public/base.html" %}
+{% block title %}{{ question.questions_text }}{% endblock %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
+<div class="row">
+  <div class="col"><h1>{{ question.questions_text }}</h1></div>
+</div>
+<div class="row">
+  <div class="col">
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
+    <form action="{% url 'polls:vote' question.id %}" method="post">
 
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-{% endfor %}
-<input type="submit" value="Vote">
-</form>
+    {% for choice in question.choice_set.all %}
+      <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+      <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+      <input type="submit" value="Vote">
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -38,11 +38,13 @@ hawk_scan_execute:
     - docker:19.03.1-dind
   script:
     - docker build -t vuln_django:latest .
-    - docker network create scan_net
-    - docker pull stackhawk/hawkscan:latest
-    - docker run --detach -p 8020:8020 --network scan_net --name vuln-django --rm vuln_django:latest
+    #- docker network create scan_net
+    #- docker pull stackhawk/hawkscan:latest
+    - pwd
+    - ls -lah .
+    - docker run --detach -p 8020:8020 --name vuln-django --rm vuln_django:latest
     - |
-      docker run --network scan_net --volume $(pwd):/hawk:rw --tty --rm \
+      docker run --volume $(pwd):/hawk:rw --tty --rm \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         --env BRANCH=GitLab:${CI_COMMIT_BRANCH} \
         --env NO_COLOR=true \

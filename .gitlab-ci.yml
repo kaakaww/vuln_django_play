@@ -1,3 +1,6 @@
+include:
+  local: DAST.gitlab-ci.yml
+
 stages:
   - test
   - build
@@ -37,6 +40,8 @@ hawk_scan_execute:
   services:
     - docker:19.03.1-dind
   script:
+    - env
+    - ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'
     - docker build -t vuln_django:latest .
     #- docker network create scan_net
     #- docker pull stackhawk/hawkscan:latest

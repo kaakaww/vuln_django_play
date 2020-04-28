@@ -2,7 +2,7 @@ include:
   local: HAWKSCAN_LOCAL.gitlab-ci.yml
 
 variables:
-  HAWK_APP_IMAGE: vuln_django:latest
+  HAWK_APP_IMAGE: registry.gitlab.com/kcberg/vuln_django:latest
   HAWK_APP_SVC_NAME: vuln-django
   HAWK_APP_PORT: 8020
 #  HAWKSCAN_ARGS: stackhawk.yml stackhawk-gitlab.yml
@@ -41,7 +41,7 @@ docker-build:
   script:
    - docker build -t $HAWK_APP_IMAGE .
    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-   - docker push registry.gitlab.com/kcberg/$HAWK_APP_IMAGE
+   - docker push $HAWK_APP_IMAGE
 
 #security_scan:
 #  stage: hawkscan

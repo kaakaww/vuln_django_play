@@ -3,7 +3,7 @@ stages:
   - build
   - test
   - deploy
-  - dast
+  - hawkscan
 
 #variables:
 #  DAST_VERSION: 1
@@ -12,17 +12,22 @@ hawkscan:
   stage: hawkscan
   services:
     - docker:19.03.1-dind
-  image:
-    name: "stackhawk/hawkscan:latest"
-    entrypoint: [""]
+  image: docker:19.03.1
   variables:
     GIT_STRATEGY: fetch
   allow_failure: true
   script:
     - env
     - if [ -z "$HAWK_APP_IMAGE$HAWK_APP_SVC_NAME$HAWK_APP_PORT$HAWK_API_ID$HAWK_API_SECRET" ]; then echo "HAWK_APP_IMAGE, HAWK_APP_PORT, HAWK_API_ID, and HAWK_API_SECRET are required" && exit 1; fi
-    - docker run --detach -p $HAWK_APP_PORT:$HAWK_APP_PORT --name $HAWK_APP_SVC_NAME --rm $HAWK_APP_IMAGE
-    - shawk API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" $HAWKSCAN_ARGS
+    - docker pull stackhawk/hawkscan:latest
+    - docker network create scan_net
+    - docker run --detach -p $HAWK_APP_PORT:$HAWK_APP_PORT --network scan_net --name $HAWK_APP_SVC_NAME --rm $HAWK_APP_IMAGE
+    - |
+        docker run --volume $(pwd):/hawk:rw --tty --rm \
+          --network scan_net \
+          --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
+          --env NO_COLOR=true \
+          stackhawk/hawkscan:latest $HAWKSCAN_ARGS
 #  artifacts:
 #    reports:
 #      dast: gl-dast-report.json

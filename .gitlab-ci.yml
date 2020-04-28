@@ -41,7 +41,7 @@ hawk_scan_execute:
     - docker:19.03.1-dind
   script:
     - env
-    - ip -4 addr show all
+    - ifconfig
     - docker build -t vuln_django:latest .
     #- docker network create scan_net
     #- docker pull stackhawk/hawkscan:latest

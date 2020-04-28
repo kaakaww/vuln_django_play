@@ -14,7 +14,7 @@ hawkscan:
     - docker:19.03.1-dind
   image:
     name: "stackhawk/hawkscan:latest"
-    entrypoint: ["/usr/bin/bash"]
+    entrypoint: ["/bin/bash"]
   variables:
     GIT_STRATEGY: fetch
   allow_failure: true

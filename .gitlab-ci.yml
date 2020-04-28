@@ -39,6 +39,7 @@ docker-build:
   services:
     - docker:19.03.1-dind
   script:
+   - env
    - docker build -t $HAWK_APP_IMAGE .
    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
    - docker push $HAWK_APP_IMAGE

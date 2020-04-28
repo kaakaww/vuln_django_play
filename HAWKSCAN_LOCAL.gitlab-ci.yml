@@ -1,0 +1,36 @@
+
+stages:
+  - build
+  - test
+  - deploy
+  - dast
+
+#variables:
+#  DAST_VERSION: 1
+
+hawkscan:
+  stage: hawkscan
+  services:
+    - docker:19.03.1-dind
+  image:
+    name: "stackhawk/hawkscan:latest"
+  variables:
+    GIT_STRATEGY: fetch
+  allow_failure: true
+  script:
+    - env
+    - if [ -z "$HAWK_APP_IMAGE$HAWK_APP_SVC_NAME$HAWK_APP_PORT$HAWK_API_ID$HAWK_API_SECRET" ]; then echo "HAWK_APP_IMAGE, HAWK_APP_PORT, HAWK_API_ID, and HAWK_API_SECRET are required" && exit 1; fi
+    - docker run --detach -p $HAWK_APP_PORT:$HAWK_APP_PORT --name $HAWK_APP_SVC_NAME --rm $HAWK_APP_IMAGE
+    - shawk API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" $HAWKSCAN_ARGS
+#  artifacts:
+#    reports:
+#      dast: gl-dast-report.json
+#  only:
+#    refs:
+#      - branches
+#    variables:
+#      - $GITLAB_FEATURES =~ /\bdast\b/
+#  except:
+#    variables:
+#      - $DAST_DISABLED
+#      - $DAST_DISABLED_FOR_DEFAULT_BRANCH && $CI_DEFAULT_BRANCH == $CI_COMMIT_REF_NAME

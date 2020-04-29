@@ -1,4 +1,4 @@
 app:
   env: ${BRANCH:gitlab-ci}
   # The url of your application to scan
-  host: https://gitlab-ci-vuln-django.herokuapp.com # (required)
+  host: https://vuln-django.herokuapp.com # (required)

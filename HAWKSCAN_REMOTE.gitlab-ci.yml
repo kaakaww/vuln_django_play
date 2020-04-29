@@ -22,6 +22,7 @@ heroku:
     - env
     - git push heroku feature/hawkscan-dast:master
     - dpl --provider=heroku --app=vuln_django --api_key=$HEROKU_API_KEY
+    - heroku ps:scale web=1 -a vuln-django
     - |
       heroku ps:exec "bash -c '. .profile.d/python.sh;
       python manage.py migrate;

@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from django.apps import AppConfig
-from django.core.management import ManagementUtility
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,23 +26,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'vuln-django']
 
-
-class VulnConfig(AppConfig):
-    name = 'vuln_django'
-    verbose_name = "Vulny Django"
-
-    def ready(self):
-        os.environ['DJANGO_SUPERUSER_USERNAME'] = 'admin'
-        os.environ['DJANGO_SUPERUSER_PASSWORD'] = 'adminpassword'
-        os.environ['DJANGO_SUPERUSER_EMAIL'] = 'admin@example.com'
-        utility = ManagementUtility('migrate')
-        utility.execute()
-
-        utility = ManagementUtility('createsuperuser --no-input')
-        utility.execute()
-
-        utility = ManagementUtility('seed polls --number=5')
-        utility.execute()
 
 # Application definition
 

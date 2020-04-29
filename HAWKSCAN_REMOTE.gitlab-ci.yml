@@ -5,31 +5,24 @@ stages:
   - deploy
   - hawkscan
 
-#variables:
-#  DAST_VERSION: 1
+variables:
+  DAST_ARTIFACT: 1
 
 hawkscan:
   stage: hawkscan
-  services:
-    - docker:19.03.1-dind
   image:
     name: "stackhawk/hawkscan:latest"
+    entrypoint: [""]
   variables:
     GIT_STRATEGY: fetch
   allow_failure: true
   script:
     - env
-    - pwd
+    - if [ -z "$HAWK_API_ID$HAWK_API_SECRET" ]; then echo "HAWK_API_ID and HAWK_API_SECRET are required" && exit 1; fi
+    - export API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}"
+    - export NO_COLOR=true
+    - env
     - shawk $HAWKSCAN_ARGS
-#  artifacts:
-#    reports:
-#      dast: gl-dast-report.json
-#  only:
-#    refs:
-#      - branches
-#    variables:
-#      - $GITLAB_FEATURES =~ /\bdast\b/
-#  except:
-#    variables:
-#      - $DAST_DISABLED
-#      - $DAST_DISABLED_FOR_DEFAULT_BRANCH && $CI_DEFAULT_BRANCH == $CI_COMMIT_REF_NAME
+  artifacts:
+    reports:
+      dast: stackhawk-dast-report.json

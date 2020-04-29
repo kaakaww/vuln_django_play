@@ -5,9 +5,6 @@ stages:
   - deploy
   - hawkscan
 
-#variables:
-#  DAST_VERSION: 1
-
 hawkscan:
   stage: hawkscan
   services:
@@ -19,24 +16,17 @@ hawkscan:
   script:
     - env
     - if [ -z "$HAWK_APP_IMAGE$HAWK_APP_SVC_NAME$HAWK_APP_PORT$HAWK_API_ID$HAWK_API_SECRET" ]; then echo "HAWK_APP_IMAGE, HAWK_APP_PORT, HAWK_API_ID, and HAWK_API_SECRET are required" && exit 1; fi
+    - chmod o+rw $(pwd)
     - docker pull stackhawk/hawkscan:latest
     - docker network create scan_net
     - docker run --detach -p $HAWK_APP_PORT:$HAWK_APP_PORT --network scan_net --name $HAWK_APP_SVC_NAME --rm $HAWK_APP_IMAGE
     - |
-        docker run --volume $(pwd):/hawk:rw --tty --rm \
-          --network scan_net \
-          --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
-          --env NO_COLOR=true \
-          stackhawk/hawkscan:latest $HAWKSCAN_ARGS
-#  artifacts:
-#    reports:
-#      dast: gl-dast-report.json
-#  only:
-#    refs:
-#      - branches
-#    variables:
-#      - $GITLAB_FEATURES =~ /\bdast\b/
-#  except:
-#    variables:
-#      - $DAST_DISABLED
-#      - $DAST_DISABLED_FOR_DEFAULT_BRANCH && $CI_DEFAULT_BRANCH == $CI_COMMIT_REF_NAME
+      docker run --volume $(pwd):/hawk:rw --tty --rm \
+        --network scan_net \
+        --env DAST_ARTIFACT=1 \
+        --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
+        --env NO_COLOR=true \
+        stackhawk/hawkscan:latest $HAWKSCAN_ARGS
+  artifacts:
+    reports:
+      dast: stackhawk-dast-report.json

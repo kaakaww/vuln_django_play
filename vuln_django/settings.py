@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.apps import AppConfig
+from django.core.management import ManagementUtility
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -26,6 +28,23 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*', 'vuln-django']
 
+
+class VulnConfig(AppConfig):
+    name = 'vuln_django'
+    verbose_name = "Vulny Django"
+
+    def ready(self):
+        os.environ['DJANGO_SUPERUSER_USERNAME'] = 'admin'
+        os.environ['DJANGO_SUPERUSER_PASSWORD'] = 'adminpassword'
+        os.environ['DJANGO_SUPERUSER_EMAIL'] = 'admin@example.com'
+        utility = ManagementUtility('migrate')
+        utility.execute()
+
+        utility = ManagementUtility('createsuperuser --no-input')
+        utility.execute()
+
+        utility = ManagementUtility('seed polls --number=5')
+        utility.execute()
 
 # Application definition
 
@@ -70,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vuln_django.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -80,7 +98,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -100,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -114,7 +130,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -122,5 +137,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Activate Django-Heroku.
-#if 'PORT' in os.environ:
+# if 'PORT' in os.environ:
 #     django_heroku.settings(locals())

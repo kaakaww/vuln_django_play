@@ -25,4 +25,4 @@ deploy-heroku:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=gitlab-ci-vuln-django --api-key=$HEROKU_STAGING_API_KEY
+    - dpl --provider=heroku --app=vuln-django --api-key=$HEROKU_STAGING_API_KEY

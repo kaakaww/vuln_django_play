@@ -6,9 +6,8 @@ test:
     # This configures the test stuff
     - apt-get update -qy
     - apt-get install -y python-dev python-pip
-    - pip install -r src/requirements.txt
+    - pip install -r requirements.txt
     - flake8 vuln_django --max-line-length=127
-    - cd src
     - python manage.py migrate
     - python manage.py test
     - coverage run --source='.' manage.py test

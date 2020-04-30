@@ -118,7 +118,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-SECURE_REFERRER_POLICY = 'no-referrer'
+# SECURE_REFERRER_POLICY = 'no-referrer'
 
 LOGGING = {
     'version': 1,

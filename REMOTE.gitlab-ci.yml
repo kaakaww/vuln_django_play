@@ -25,5 +25,5 @@ heroku:
     - |
       heroku ps:exec "bash -c '. .profile.d/python.sh;
       python manage.py migrate;
-      DJANGO_SUPERUSER_PASSWORD=adminpassword python manage.py createsuperuser --email=admin@exmaple.com --username=admin;
+      DJANGO_SUPERUSER_PASSWORD=adminpassword python manage.py createsuperuser --email=admin@exmaple.com --username=admin --no-input;
       python manage.py seed polls --number=5'" -a vuln-django -d web.1

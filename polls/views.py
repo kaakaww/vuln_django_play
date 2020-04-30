@@ -97,15 +97,13 @@ def sql_injector(request, ):
     cursor.execute(prepared_sql)
     sql_results = cursor.fetchall()
     cursor.close()
-    return HttpResponse("Ohh, my DB info, yeah it's here: " + str(sql_results))
+    return render(request, 'polls/sequeleye.html', {
+        'sql_str': sql_str,
+        'sql_results': sql_results,
+    }) #HttpResponse("Ohh, my DB info, yeah it's here: " + str(sql_results))
 
 
 @csrf_exempt
 def search(request, ):
     search_str = request.POST.get('search_string', 'found nothing in search')
     return render(request, 'polls/search_detail.html', {'search_string': search_str,})
-
-
-@csrf_exempt
-def redirect_to_polls(request, ):
-    return HttpResponseRedirect(reverse('polls:results'))

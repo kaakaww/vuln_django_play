@@ -8,27 +8,6 @@ stages:
 variables:
   DAST_ARTIFACT: 1
 
-before_script:
-  - env
-  - echo "deb http://toolbelt.heroku.com/ubuntu ./" > /etc/apt/sources.list.d/heroku.list
-  - wget -O- https://toolbelt.heroku.com/apt/release.key | apt-key add -
-  - apt-get update
-  - apt-get install -y heroku-toolbelt
-  - gem install dpl
-
-heroku:
-  stage: deploy
-  script:
-    - env
-    - git push heroku feature/hawkscan-dast:master
-    - dpl --provider=heroku --app=vuln_django --api_key=$HEROKU_API_KEY
-    - heroku ps:scale web=1 -a vuln-django
-    - |
-      heroku ps:exec "bash -c '. .profile.d/python.sh;
-      python manage.py migrate;
-      DJANGO_SUPERUSER_PASSWORD=adminpassword python manage.py createsuperuser --email=admin@exmaple.com --username=admin;
-      python manage.py seed polls --number=5'" -a vuln-django -d web.1
-
 hawkscan:
   stage: hawkscan
   image:

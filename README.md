@@ -42,9 +42,9 @@ Quick start - this section is old
 ## Administrator user http://localhost:8020/admin/
 - admin:adminpassword
 
-
 # Never Name Your Docker Container with an underscore because it will make you hate yourself
 NO!
 ```docker run -it -p 8020:8020 --name vuln_django --rm --network scan_net vuln_django:latest```
 YES!
 ```docker run -it -p 8020:8020 --name vuln-django --rm --network scan_net vuln_django:latest
+

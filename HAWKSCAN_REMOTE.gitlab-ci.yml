@@ -1,9 +1,9 @@
 
-stages:
-  - build
-  - test
-  - deploy
-  - hawkscan
+#stages:
+#  - build
+#  - test
+#  - deploy
+#  - hawkscan
 
 variables:
   DAST_ARTIFACT: 1

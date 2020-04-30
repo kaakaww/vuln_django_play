@@ -23,7 +23,7 @@ heroku:
     - env
     #- heroku git:remote -a vuln-django
     #- git push heroku feature/hawkscan-dast:master
-    - dpl --provider=heroku --app=vuln_django --api_key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=vuln-django --api_key=$HEROKU_API_KEY
     - heroku ps:scale web=1 -a vuln-django
     - |
       heroku ps:exec "bash -c '. .profile.d/python.sh;

@@ -54,7 +54,7 @@ app:
 #    # Other parameters that may be required by your log in form
       otherParams: # (optional)
         - name: next  # The login form parameter is needed to make login work
-          val: "%2Fadmin%2F"
+          val: "/admin/"
 #    # The username to authenticate as when scanning
       scanUsername: admin # (required)
 #    # The password of the scanUsername

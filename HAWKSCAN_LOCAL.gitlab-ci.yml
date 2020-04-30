@@ -1,10 +1,4 @@
 
-stages:
-  - build
-  - test
-  - deploy
-  - hawkscan
-
 hawkscan:
   stage: hawkscan
   services:

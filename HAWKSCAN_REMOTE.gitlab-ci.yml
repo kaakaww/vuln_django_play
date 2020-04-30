@@ -1,10 +1,4 @@
 
-#stages:
-#  - build
-#  - test
-#  - deploy
-#  - hawkscan
-
 variables:
   DAST_ARTIFACT: 1
 
@@ -17,10 +11,10 @@ hawkscan:
     GIT_STRATEGY: fetch
   allow_failure: true
   script:
-    - env
     - if [ -z "$HAWK_API_ID$HAWK_API_SECRET" ]; then echo "HAWK_API_ID and HAWK_API_SECRET are required" && exit 1; fi
     - export API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}"
     - export NO_COLOR=true
+    - export REPO_DIR=$CI_PROJECT_DIR
     - env
     - shawk $HAWKSCAN_ARGS
   artifacts:

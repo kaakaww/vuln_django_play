@@ -21,15 +21,15 @@ COPY templates/ /opt/app/vuln_django/templates
 COPY polls/ /opt/app/vuln_django/polls
 COPY manage.py /opt/app/vuln_django/
 WORKDIR /opt/app
-RUN pip install -r requirements.txt
-RUN chown -R www-data:www-data /opt/app
-RUN python vuln_django/manage.py migrate
+RUN pip install -r requirements.txt \
+&& chown -R www-data:www-data /opt/app \
+&& python vuln_django/manage.py migrate
 ENV DJANGO_SUPERUSER_USERNAME=admin
 ENV DJANGO_SUPERUSER_PASSWORD=adminpassword
 ENV DJANGO_SUPERUSER_EMAIL=admin@example.com
-RUN python vuln_django/manage.py createsuperuser --no-input
-RUN chown -R www-data:www-data /opt/app
-RUN python vuln_django/manage.py seed polls --number=5
+RUN python vuln_django/manage.py createsuperuser --no-input \
+&& chown -R www-data:www-data /opt/app \
+&& python vuln_django/manage.py seed polls --number=5
 
 EXPOSE 8020
 STOPSIGNAL SIGTERM

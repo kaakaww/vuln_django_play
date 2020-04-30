@@ -1,1 +1,0 @@
-default_app_config = 'vuln_django.settings.VulnConfig'

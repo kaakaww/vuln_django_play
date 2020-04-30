@@ -140,7 +140,3 @@ LOGGING = {
         },
     },
 }
-
-# Activate Django-Heroku.
-# if 'PORT' in os.environ:
-#     django_heroku.settings(locals())

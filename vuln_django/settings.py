@@ -118,6 +118,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
+SECURE_REFERRER_POLICY = 'same-origin'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

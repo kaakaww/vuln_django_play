@@ -11,7 +11,7 @@ variables:
 hawkscan:
   stage: hawkscan
   image:
-    name: "stackhawk/hawkscan:latest"
+    name: "stackhawk/hawkscan:beta"
     entrypoint: [""]
   variables:
     GIT_STRATEGY: fetch

@@ -52,9 +52,9 @@ app:
 #    # The password field name in your authentication form.
       passwordField: password # (required)
 #    # Other parameters that may be required by your log in form
-#      otherParams: # (optional)
-#        - name: next  # The login form parameter is needed to make login work
-#          val: "/admin/"
+      otherParams: # (optional)
+        - name: next  # The login form parameter is needed to make login work
+          val: "%2Fadmin%2F"
 #    # The username to authenticate as when scanning
       scanUsername: admin # (required)
 #    # The password of the scanUsername

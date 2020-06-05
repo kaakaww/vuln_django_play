@@ -14,7 +14,9 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
-    - "/admin/logout/" # the scanner will log itself out if you don't ignore here
+    - "/admin/logout/"
+    - "/admin/password_change/"
+    - "/another-path/" # the scanner will log itself out if you don't ignore here
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an
@@ -37,7 +39,7 @@ app:
 #   # What kind of thing will the browser pass to the server to prove it's logged in
     cookieAuthorization:
       cookieNames:
-        - "token"
+        - "sessionid"
         - "csrftoken"
     usernamePassword:
 

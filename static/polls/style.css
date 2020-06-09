@@ -1,5 +1,5 @@
 body {
-    background: white ;
+    background: white url("images/bg.gif") no-repeat;
 }
 
 li a {

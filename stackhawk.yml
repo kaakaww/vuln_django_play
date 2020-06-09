@@ -15,7 +15,8 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
-    - "/admin/logout/" # the scanner will log itself out if you don't ignore here
+    - /admin/logout/ # the scanner will log itself out if you don't ignore here
+    - /admin/password_change/
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an

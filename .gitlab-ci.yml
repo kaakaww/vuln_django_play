@@ -47,6 +47,9 @@ hawk_scan_execute:
         --env BRANCH=GitLab:${CI_COMMIT_BRANCH} \
         --env NO_COLOR=true \
         stackhawk/hawkscan:latest stackhawk.yml stackhawk-gitlab.yml
+  artifacts:
+    reports:
+      dast: stackhawk-dast-report.json
 
 gitlab-scan:
   image: docker:19.03.1

@@ -9,7 +9,7 @@ app:
   contactEmail: scott.gerlach@sterkherk.kerm # (optional)
   # The risk level of the app
   riskLevel: MEDIUM # (optional)
-  # The type of data sensitivity the web app mantains
+  # The type of data sensitivity the web app maintains
   appDataType: PII # (optional)
 
 #  # The name of your anti csrf parameter
@@ -21,7 +21,7 @@ app:
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an
 #  # authenticated user of your app.
-#  # Autenticated requests will pass cookies received from the form POST
+#  # Authenticated requests will pass cookies received from the form POST
 #  # to maintain authentication.
   authentication:
 #    # A regex to match against http responses to determine if the scan user is

@@ -1,2 +1,3 @@
 .git
 **/*.sqlite3
+venv

@@ -1,0 +1,60 @@
+version: "3.7"
+
+services:
+  vuln-django:
+    image: vuln-django:travis
+    build:
+      target: micro
+      args:
+        - SERVER_PORT=8010
+    environment:
+      - SERVER_PORT=8010
+    ports:
+      - 8010:8010
+    depends_on:
+      - postgres
+    networks:
+      scannet:
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_password
+      POSTGRES_DB: django_db
+    ports:
+      - 5432:5432
+    networks:
+      scannet:
+
+  migrations:
+    image: vuln-django:travis
+    command: >
+      sh -c "sleep 10 &&
+      scripts/wait-for-it.sh postgres:5432 --timeout=30 --strict --
+      python manage.py migrate --settings=vuln_django.settings_travis"
+    depends_on:
+      - vuln-django
+    networks:
+      scannet:
+
+  tests:
+    image: vuln-django:travis
+    command: python manage.py test --settings=vuln_django.settings_travis
+    depends_on:
+      - migrations
+    networks:
+      scannet:
+
+  seed-data:
+    image: vuln-django:travis
+    command: python manage.py seed polls --number=5 --settings=vuln_django.settings_travis
+    depends_on:
+      - tests
+    networks:
+      scannet:
+
+
+networks:
+  scannet:

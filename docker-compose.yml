@@ -1,17 +1,15 @@
 version: '3.7'
 
 services:
-  base:
-    image: vuln_django
-    container_name: vuln-django
+  vuln-django:
+    image: ${IMAGE_NAME:-vuln_django}
     build:
       dockerfile: Dockerfile
       context: .
+      target: ${TARGET:-turnkey}
       args:
         - SERVER_PORT=${SERVER_PORT:-8020}
     environment:
       - SERVER_PORT=${SERVER_PORT:-8020}
     ports:
       - ${SERVER_PORT:-8020}:${SERVER_PORT:-8020}
-    entrypoint:
-      - /opt/app/start-server.sh

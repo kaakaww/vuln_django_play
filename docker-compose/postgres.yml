@@ -19,6 +19,10 @@ services:
       target: postgres
     depends_on:
       - postgres
+    environment:
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_PASSWORD: adminpassword
+      DJANGO_SUPERUSER_EMAIL: admin@example.com
 
   postgres:
     image: postgres

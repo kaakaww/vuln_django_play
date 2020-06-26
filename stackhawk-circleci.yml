@@ -1,3 +1,4 @@
 app:
   applicationId: ${APP_ID}
   host: http://vuln-django:8020
+  env: ${APP_ENV:circle-ci}

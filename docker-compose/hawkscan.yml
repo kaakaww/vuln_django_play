@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  hawkscan:
+    image: stackhawk/hawkscan:latest
+    depends_on:
+      - vuln-django
+    env_file:
+      - .env.travis-ci
+    volumes:
+      - .:/hawk
+    command: stackhawk.yml stackhawk-travis-ci.yml

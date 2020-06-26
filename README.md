@@ -5,7 +5,7 @@ Vulnerable Polls
 Polls is a simple Django app to conduct Web-based polls. For each
 question, visitors can choose between a fixed number of answers.
 
-Based on the Django Polls tutorial, contains a few XSS/SQLi issues and
+Based on the [Django Polls tutorial](https://docs.djangoproject.com/en/3.0/intro/tutorial01/), contains a few XSS/SQLi issues and
 turns off the built in protections to prevent that.
 
 # Build and run

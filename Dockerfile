@@ -12,22 +12,22 @@ COPY scripts /opt/app/vuln_django/scripts
 RUN pip install -r /opt/app/requirements.txt
 
 
-# Create a "micro" stage to run as a gunicorn container
+# Create a "postgres" stage to run as a gunicorn container
 #  - Requires a PostgreSQL DB named "postgres"
-#  - Requires migrations to run after startup (see docker-compose-travis.yml)
-FROM base as micro
+#  - Requires migrations to run after startup (see docker-compose/postgres.yml)
+FROM base as postgres
 ARG SERVER_PORT=8010
 ENV SERVER_PORT=${SERVER_PORT}
-ENV DJANGO_SETTINGS_MODULE=vuln_django.settings_travis
+ENV DJANGO_SETTINGS_MODULE=vuln_django.settings_postgres
 EXPOSE ${SERVER_PORT}:${SERVER_PORT}
 WORKDIR /opt/app/vuln_django
 CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 
 
-# Create a "turnkey" stage as the default final build target for legacy integrations.
+# Create a "dev" stage as the default final build target for legacy integrations.
 #  - Includes sqlite and nginx
 #  - Runs data migrations and seeds poll data
-FROM base as turnkey
+FROM base as dev
 
 ARG SERVER_PORT=8020
 ARG DJANGO_SUPERUSER_USERNAME=admin

@@ -1,0 +1,38 @@
+# Builds the "postgres" stage, and adds the required PostgreSQL DB. You will need to run migrations manually, e.g.
+# docker-compose
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+    - ./nginx.conf.postgres:/etc/nginx/nginx.conf:ro
+    - ./static:/opt/app/vuln_django/static:ro
+    ports:
+      - 8020:8020
+    depends_on:
+      - vuln-django
+
+  vuln-django:
+    image: vuln_django:postgres
+    build:
+      target: postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_password
+      POSTGRES_DB: django_db
+
+# To run migrations:
+#   docker-compose exec vuln-django python manage.py migrate
+#
+# To run tests:
+#   docker-compose exec vuln-django python manage.py test
+#
+# To seed the database with random data:
+#   docker-compose exec vuln-django python manage.py seed polls --number=5

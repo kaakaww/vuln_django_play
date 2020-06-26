@@ -1,3 +1,4 @@
+# The base configuration builds and runs the "turnkey" stage, with SQLite. More options available under docker-compose/
 version: '3.7'
 
 services:
@@ -6,10 +7,4 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-      target: ${TARGET:-turnkey}
-      args:
-        - SERVER_PORT=${SERVER_PORT:-8020}
-    environment:
-      - SERVER_PORT=${SERVER_PORT:-8020}
-    ports:
-      - ${SERVER_PORT:-8020}:${SERVER_PORT:-8020}
+      target: ${TARGET:-dev}

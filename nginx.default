@@ -1,4 +1,5 @@
 # nginx.default
+# Used by the `dev` stage image from the Dockerfile in this repo
 
 server {
   listen 8020 deferred;

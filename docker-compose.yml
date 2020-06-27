@@ -1,10 +1,17 @@
-# The base configuration builds and runs the "turnkey" stage, with SQLite. More options available under docker-compose/
+# Build the dev stage of the Dockerfile, and run it with local ports.
 version: '3.7'
 
 services:
   vuln-django:
-    image: ${IMAGE_NAME:-vuln_django}
+    image: vuln_django
     build:
-      dockerfile: Dockerfile
       context: .
-      target: ${TARGET:-dev}
+      target: dev
+      args:
+        - SERVER_PORT=${SERVER_PORT:-8020}
+    environment:
+      - SERVER_PORT=${SERVER_PORT:-8020}
+    ports:
+      - ${SERVER_PORT:-8020}:${SERVER_PORT:-8020}
+    entrypoint:
+      - /opt/app/start-server.sh

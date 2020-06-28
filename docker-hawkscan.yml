@@ -3,10 +3,19 @@ version: "3.7"
 services:
   hawkscan:
     image: stackhawk/hawkscan:latest
-    depends_on:
-      - vuln-django
-    env_file:
-      - .env.travis-ci
+    command: stackhawk.yml stackhawk-travis.yml
+    environment:
+      - API_KEY=${HAWK_API_KEY}
+      - APP_ID=${APP_ID}
+      - APP_ENV="${APP_ENV:-Development}"
+      - HOST=${HOST:-http://vuln-proxy:8020}
     volumes:
       - .:/hawk
-    command: stackhawk.yml stackhawk-travis-ci.yml
+
+  vuln-proxy:
+    logging:
+      driver: none
+
+  vuln-django:
+    logging:
+      driver: none

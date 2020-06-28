@@ -11,6 +11,7 @@ idna==2.9
 Markdown==3.2.1
 martor==1.4.7
 mccabe==0.6.1
+mysqlclient==1.4.6
 psycopg2==2.8.5
 pycodestyle==2.5.0
 pyflakes==2.1.1

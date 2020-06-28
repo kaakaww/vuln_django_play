@@ -1,12 +1,12 @@
-# Builds the "postgres" stage, and adds the required PostgreSQL DB. You will need to run migrations manually, e.g.
-# docker-compose
+# Builds the vuln_django "micro" stage. Adds an Nginx proxy, and a postgres DB.
+# You will need to run migrations manually.
 version: "3.7"
 
 services:
   vuln-proxy:
     image: nginx
     volumes:
-      - ./nginx.conf.postgres:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf.micro:/etc/nginx/nginx.conf:ro
       - ./static:/opt/app/vuln_django/static:ro
     ports:
       - 8020:8020
@@ -16,28 +16,29 @@ services:
   vuln-django:
     image: vuln_django:micro
     build:
+      context: .
       target: micro
     depends_on:
-      - postgres
+      - db
     environment:
-      DJANGO_ALLOWED_HOSTS: localhost nginx
-      DJANGO_SUPERUSER_USERNAME: admin
-      DJANGO_SUPERUSER_PASSWORD: adminpassword
-      DJANGO_SUPERUSER_EMAIL: admin@example.com
-      SQL_ENGINE: django.db.backends.postgresql
-      SQL_HOST: postgres
-      SQL_PORT: 5432
-      SQL_DATABASE: django_db
-      SQL_USER: django_user
-      SQL_PASSWORD: django_password
+      - DJANGO_ALLOWED_HOSTS=localhost nginx
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=adminpassword
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - SQL_DATABASE=django_db
+      - SQL_USER=django_user
+      - SQL_PASSWORD=django_password
 
-  postgres:
+  db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: django_db
-      POSTGRES_USER: django_user
-      POSTGRES_PASSWORD: django_password
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=django_password
 
 # To run migrations:
 #   docker-compose exec vuln-django python manage.py migrate

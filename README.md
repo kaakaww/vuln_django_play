@@ -1,6 +1,4 @@
-=====
-Vulnerable Polls
-=====
+# Vulnerable Polls
 
 Polls is a simple Django app to conduct Web-based polls. For each
 question, visitors can choose between a fixed number of answers.
@@ -9,6 +7,15 @@ Based on the [Django Polls tutorial](https://docs.djangoproject.com/en/3.0/intro
 turns off the built in protections to prevent that.
 
 # Build and run
+
+## Prerequisites
+
+If you are building on a Mac, you will need to have MySQL and PostgreSQL installed to satisfy dependencies for the MySQL and Postgres client modules listed in `requirements.txt`.
+
+```shell script
+brew install postgresql
+brew install mysql
+```
 
 ## Using docker-compose
 

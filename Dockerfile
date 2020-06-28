@@ -12,14 +12,15 @@ COPY scripts /opt/app/vuln_django/scripts
 RUN pip install -r /opt/app/requirements.txt
 
 
-# Create a "postgres" stage to run as a gunicorn container
-#  - Requires a PostgreSQL DB named "postgres"
-#  - Requires migrations to run after startup (see docker-compose/postgres.yml)
-FROM base as postgres
+# Create a "micro" stage to run as a gunicorn container
+# Requires migrations to run after startup (see docker-micro.yml)
+FROM base as micro
 ARG SERVER_PORT=8010
 ENV SERVER_PORT=${SERVER_PORT}
-ENV DJANGO_SETTINGS_MODULE=vuln_django.settings_postgres
 EXPOSE ${SERVER_PORT}:${SERVER_PORT}
+RUN apt-get update && \
+	apt-get install -y --no-install-recommends \
+    netcat
 WORKDIR /opt/app/vuln_django
 CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 

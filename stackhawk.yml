@@ -30,7 +30,7 @@ app:
 #    # A regex to match against http responses to determine if the scan user is
 #    # logged out of your app
     loggedOutIndicator: "\\Qlogin-form\\E" # (required)
-#   # A page that is only accessable being logged in. We will try to access this page
+#   # A page that is only accessible being logged in. We will try to access this page
 #   # to validate authentication worked
     testPath:
       path: /admin/auth/user/

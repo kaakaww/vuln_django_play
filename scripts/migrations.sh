@@ -11,7 +11,7 @@ while ! ${EXEC_CMD} bash -c 'nc -z "${SQL_HOST}" "${SQL_PORT}"'; do
 done
 echo Database ready!
 
-# Echo my commands back from here
+# Echo my commands from here
 set -ex
 
 # Run database migrations to build tables

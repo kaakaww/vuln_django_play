@@ -3,18 +3,20 @@
 
 function clean-repo {
   echo Cleaning repository...
-  cd $(dirname $0) || exit 1
+  cd $(dirname $0)/.. || exit 1
   rm -rf \
     .circleci \
     scripts
-  rm \
+  rm -f \
     .gitlab-ci.yml \
-    .[A-Z]gitlab-ci.yml \
+    [A-Z]*.gitlab-ci.yml \
+    .travis.yml \
     Dockerfile \
-    docker-micro* \
+    docker-* \
     nginx* \
     Procfile \
-    stackhawk*
+    stackhawk* \
+    start-server.sh
   echo Complete!
   exit 0
 }
@@ -29,7 +31,7 @@ echo This script will DELETE most of the files in this project!
 echo Run this if you would like to clear all automation from this project
 echo so you can follow along with the Travis CI tutorial.
 echo
-read -p "Do you wish to DELETE automation from this project? [y/N]" yn
+read -p "Do you want to DELETE automation from this project? [y/N]" yn
 case $yn in
   [Yy]* ) clean-repo; break;;
   * ) cancel-clean;;

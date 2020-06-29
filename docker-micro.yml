@@ -1,0 +1,41 @@
+# Builds the vuln_django "micro" stage. Adds an Nginx proxy, and a postgres DB.
+# You will need to run migrations manually. See README.
+version: "3.7"
+
+services:
+  vuln-proxy:
+    image: nginx
+    volumes:
+      - ./nginx.conf.micro:/etc/nginx/nginx.conf:ro
+      - ./static:/opt/app/vuln_django/static:ro
+    ports:
+      - 8020:8020
+    depends_on:
+      - vuln-django
+
+  vuln-django:
+    image: vuln_django:micro
+    build:
+      context: .
+      target: micro
+    depends_on:
+      - db
+    environment:
+      - DJANGO_ALLOWED_HOSTS=*
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=adminpassword
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - SQL_DATABASE=django_db
+      - SQL_USER=django_user
+      - SQL_PASSWORD=django_password
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=django_password

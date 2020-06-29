@@ -1,12 +1,12 @@
+# Build the dev stage of the Dockerfile, and run it with local ports.
 version: '3.7'
 
 services:
-  base:
+  vuln-django:
     image: vuln_django
-    container_name: vuln-django
     build:
-      dockerfile: Dockerfile
       context: .
+      target: dev
       args:
         - SERVER_PORT=${SERVER_PORT:-8020}
     environment:

@@ -1,7 +1,7 @@
 app:
-  applicationId: a629eeae-4bb9-4918-b3eb-bb141b4e8918 # This is my AppID. There are many like it, but this one is mine.
+  applicationId: ${APP_ID:a629eeae-4bb9-4918-b3eb-bb141b4e8918} # This is my AppID. There are many like it, but this one is mine.
   # applicationId: 4edd858d-86b7-4112-91bb-acf3fc984b6a
-  env: Development
+  env: ${APP_ENV:Development}
   # The url of your application to scan
   host: ${HOST:http://localhost:8020} # (required)
   # Our scanner's capability is still in Alpha; If we notice a bug we'll use this email to reach out or provide a fix.
@@ -30,7 +30,7 @@ app:
 #    # A regex to match against http responses to determine if the scan user is
 #    # logged out of your app
     loggedOutIndicator: "\\Qlogin-form\\E" # (required)
-#   # A page that is only accessable being logged in. We will try to access this page
+#   # A page that is only accessible being logged in. We will try to access this page
 #   # to validate authentication worked
     testPath:
       path: /admin/auth/user/

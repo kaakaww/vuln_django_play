@@ -7,7 +7,7 @@ language: generic
 
 env:
   global:
-    - APP_ENV='travis-ci'
+    - APP_ENV='Travis CI'
 
 services:
   - docker

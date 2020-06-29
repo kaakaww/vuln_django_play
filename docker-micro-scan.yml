@@ -7,7 +7,7 @@ services:
     environment:
       - API_KEY=${HAWK_API_KEY}
       - APP_ID=${APP_ID}
-      - APP_ENV="${APP_ENV:-Development}"
+      - APP_ENV="${APP_ENV:-Travis CI}"
       - HOST=${HOST:-http://vuln-proxy:8020}
     volumes:
       - .:/hawk

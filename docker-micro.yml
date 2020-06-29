@@ -1,5 +1,5 @@
 # Builds the vuln_django "micro" stage. Adds an Nginx proxy, and a postgres DB.
-# You will need to run migrations manually.
+# You will need to run migrations manually. See README.
 version: "3.7"
 
 services:
@@ -39,12 +39,3 @@ services:
       - POSTGRES_DB=django_db
       - POSTGRES_USER=django_user
       - POSTGRES_PASSWORD=django_password
-
-# To run migrations:
-#   docker-compose exec vuln-django python manage.py migrate
-#
-# To run tests:
-#   docker-compose exec vuln-django python manage.py test
-#
-# To seed the database with random data:
-#   docker-compose exec vuln-django python manage.py seed polls --number=5

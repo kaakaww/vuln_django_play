@@ -7,7 +7,6 @@ COPY static/ /opt/app/vuln_django/static
 COPY templates/ /opt/app/vuln_django/templates
 COPY polls/ /opt/app/vuln_django/polls
 COPY manage.py /opt/app/vuln_django/
-COPY scripts /opt/app/vuln_django/scripts
 
 RUN pip install -r /opt/app/requirements.txt
 
@@ -25,7 +24,7 @@ WORKDIR /opt/app/vuln_django
 CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 
 
-# Create a "dev" stage as the default final build target for legacy integrations.
+# Create a "dev" stage as the default final build target.
 #  - Includes sqlite and nginx
 #  - Runs data migrations and seeds poll data
 FROM base as dev

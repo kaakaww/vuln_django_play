@@ -1,3 +1,3 @@
 hawk:
   spider:
-    base: true
+    base: false

@@ -2,4 +2,4 @@
 set -ex
 
 # Tear down all containers
-docker-compose -f docker-micro-pg.yml -f docker-hawkscan.yml down --remove-orphans
+docker-compose -f docker-micro.yml -f docker-micro-scan.yml down --remove-orphans

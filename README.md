@@ -43,8 +43,8 @@ The `docker-micro-pg` Docker Compose configuration builds a microservice version
 
 Build, run, and run data migrations:
 ```shell script
-docker-compose -f docker-micro-pg.yml build
-docker-compose -f docker-micro-pg.yml up --detach
+docker-compose -f docker-micro.yml build
+docker-compose -f docker-micro.yml up --detach
 ./scripts/migrations.sh
 ```
 

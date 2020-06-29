@@ -20,16 +20,16 @@ jobs:
         - APP_ID='830780ac-07be-4995-89d4-0645f1f0e95a'
         - APP_HOST='http://vuln-proxy:8020'
         - ENV='travis-ci'
-        - EXEC_CMD='docker-compose --file docker-micro-pg.yml exec vuln-django'
+        - EXEC_CMD='docker-compose --file docker-micro.yml exec vuln-django'
       script:
-        - docker-compose --file docker-micro-pg.yml build
-        - docker-compose --file docker-micro-pg.yml up --detach
+        - docker-compose --file docker-micro.yml build
+        - docker-compose --file docker-micro.yml up --detach
         - scripts/migrations.sh
         - ${EXEC_CMD} python manage.py createsuperuser --no-input
         - ${EXEC_CMD} python manage.py seed polls --number=5
         - ${EXEC_CMD} python manage.py test
       after_success:
-        - docker-compose --file dc-base.yml --file dc-hawkscan.yml up --abort-on-container-exit
-        - docker-compose --file dc-base.yml --file dc-hawkscan.yml down
+        - docker-compose --file docker-micro.yml --file docker-micro-scan.yml up --abort-on-container-exit
+        - docker-compose --file docker-micro.yml --file docker-micro-scan.yml down
       after_failure:
-        - docker-compose --file dc-base.yml --file dc-hawkscan.yml down
+        - docker-compose --file docker-micro.yml --file docker-micro-scan.yml down

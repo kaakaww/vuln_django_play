@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Build the vuln-django image "micro" stage and run it with Nginx and PostgreSQL
 set -ex
-source $(dirname $0)/common.sh
+EXEC_CMD='docker-compose --file docker-micro.yml exec vuln-django'
 
 # Build any docker images, in particular the app container
-docker-compose -f docker-micro-pg.yml build
+docker-compose -f docker-micro.yml build
 
 # Launch the app container with Postgres backend and Nginx frontend
-docker-compose -f docker-micro-pg.yml up --detach
+docker-compose -f docker-micro.yml up --detach
 
 # Run data migrations, create admin account, and seed data.
 $(dirname $0)/migrations.sh

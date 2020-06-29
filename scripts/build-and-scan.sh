@@ -4,7 +4,7 @@ set -ex
 source $(dirname $0)/common.sh
 
 # Build vuln-django and run it with Nginx and PostgreSQL
-$(dirname $0)/build-and-prep.sh
+$(dirname $0)/build-and-run.sh
 
 # Run HawkScan against the app
 docker-compose -f docker-micro-pg.yml -f docker-hawkscan.yml up --abort-on-container-exit

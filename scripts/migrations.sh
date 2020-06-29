@@ -4,7 +4,7 @@ set -ex
 
 EXEC_CMD='docker-compose --file docker-micro-pg.yml exec vuln-django'
 
-echo Waiting for database to become available...
+echo Wait for database to become available...
 while ! ${EXEC_CMD} bash -c 'nc -z "${SQL_HOST}" "${SQL_PORT}"'; do
   sleep 0.5
 done

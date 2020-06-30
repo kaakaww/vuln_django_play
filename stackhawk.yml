@@ -1,6 +1,7 @@
 app:
-  applicationId: a629eeae-4bb9-4918-b3eb-bb141b4e8918 # This is my AppID. There are many like it, but this one is mine.
-  # applicationId: 4edd858d-86b7-4112-91bb-acf3fc984b6a
+  #applicationId: a629eeae-4bb9-4918-b3eb-bb141b4e8918 # This is my AppID. There are many like it, but this one is mine.
+  #applicationId: 4edd858d-86b7-4112-91bb-acf3fc984b6a
+  applicationId: e52420dd-179d-4d4e-9f95-4395f3db9b05
   env: Development
   # The url of your application to scan
   host: ${HOST:http://localhost:8020} # (required)
@@ -15,7 +16,7 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
-    - "/admin/logout/" # the scanner will log itself out if you don't ignore here
+    - "/admin/logout.*" # the scanner will log itself out if you don't ignore here
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an
@@ -38,7 +39,7 @@ app:
 #   # What kind of thing will the browser pass to the server to prove it's logged in
     cookieAuthorization:
       cookieNames:
-        - "token"
+        - "sessionid"
         - "csrftoken"
     usernamePassword:
 
@@ -67,6 +68,12 @@ hawk:
 #    # Enable the ajax spider for discovering your single page app
 #    ajax: false # (default)
 #    # Maximum time for spider to discover routes in your app
-#    maxDurationMinutes: 2 # (default)
+    maxDurationMinutes: 5
 #  # Maximum time to wait for the scanner to start up
 #  startupTimeoutMinutes: 5 # (default)
+
+  config:
+    - "spider.processform=true"
+    - "spider.postform=false"
+    - "spider.handleParameters=IGNORE_VALUE"
+

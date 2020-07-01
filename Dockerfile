@@ -12,7 +12,6 @@ RUN pip install -r /opt/app/requirements.txt
 
 
 # Create a "micro" stage to run as a gunicorn container
-# Requires migrations to run after startup (see README)
 FROM base as micro
 ARG SERVER_PORT=8010
 ENV SERVER_PORT=${SERVER_PORT}

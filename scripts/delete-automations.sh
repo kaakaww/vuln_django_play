@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Prepare this repository for the Travis CI tutorial.
+# This script removes automation in case you'd like to recreate it manually.
 
 function clean-repo {
   echo Cleaning repository...
@@ -13,7 +13,7 @@ function clean-repo {
     .travis.yml \
     Dockerfile \
     docker-* \
-    nginx* \
+    nginx.default \
     Procfile \
     stackhawk* \
     start-server.sh
@@ -29,8 +29,9 @@ function cancel-clean {
 echo ///// DANGER! /////
 echo This script will DELETE most of the files in this project!
 echo Run this if you would like to clear all automation from this project
-echo so you can follow along with the Travis CI tutorial.
+echo so you can try rebuilding it yourself.
 echo
+echo ///// DANGER! /////
 read -p "Do you want to DELETE automation from this project? [y/N]" yn
 case $yn in
   [Yy]* ) clean-repo; break;;

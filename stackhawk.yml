@@ -71,3 +71,7 @@ hawk:
 #    maxDurationMinutes: 2 # (default)
 #  # Maximum time to wait for the scanner to start up
 #  startupTimeoutMinutes: 5 # (default)
+  config:
+    - "spider.processform=true"
+    - "spider.postform=false"
+    - "spider.handleParameters=IGNORE_VALUE"

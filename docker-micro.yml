@@ -21,7 +21,6 @@ services:
     depends_on:
       - db
     environment:
-      - DJANGO_ALLOWED_HOSTS=*
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=adminpassword
       - DJANGO_SUPERUSER_EMAIL=admin@example.com

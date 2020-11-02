@@ -3,6 +3,16 @@ version: 2.1
 orbs:
   stackhawk: stackhawk/stackhawk@1.0.1
 
+jobs:
+  deploy-application:
+    working_directory: ~/project
+    machine: true
+    steps:
+    - checkout
+    - run:
+        name: Setup Heroku CLI
+        command: chmod +x scripts/setup_herokucli.sh
+
 workflows:
   build-and-scan:
     jobs:

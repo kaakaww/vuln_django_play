@@ -41,6 +41,9 @@ workflows:
             - run:
                 name: Create scan_net Network
                 command: docker network create scan_net
+            #- run:
+            #    name: Run Vulny Django
+            #    command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
             - run:
-                name: Run Vulny Django
-                command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
+                name: Export Docker image as tar file
+                command: docker save vuln_django:latest > image.tar

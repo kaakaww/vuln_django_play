@@ -4,6 +4,19 @@ orbs:
   stackhawk: stackhawk/stackhawk@1.0.1
 
 jobs:
+  fossa_test:
+    docker:
+      - image: circleci/golang:1
+    steps:
+      - checkout
+      - run:
+          name: Install FOSSA cli
+          command: |
+            curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
+      - run:
+          command: /usr/local/bin/fossa --no-ansi
+      - run:
+          command: /usr/local/bin/fossa test --no-ansi
   deploy-application:
     working_directory: ~/project
     machine: true
@@ -16,6 +29,7 @@ jobs:
 workflows:
   build-and-scan:
     jobs:
+      - fossa_test
       - stackhawk/hawkscan-local:
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
           docker-network: scan_net

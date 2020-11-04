@@ -29,7 +29,7 @@ jobs:
 workflows:
   build-and-scan:
     jobs:
-      deploy-application
+      - deploy-application
       # - fossa_test
       # - stackhawk/hawkscan-local:
       #     configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml

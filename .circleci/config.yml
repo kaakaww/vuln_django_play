@@ -29,21 +29,22 @@ jobs:
 workflows:
   build-and-scan:
     jobs:
-      - fossa_test
-      - stackhawk/hawkscan-local:
-          configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
-          docker-network: scan_net
-          app-id: 685847dd-0a74-4f02-b4d2-53f2396c93ed
-          steps:
-            - run:
-                name: Build Vulnarable Django
-                command: docker build -t vuln_django:latest .
-            - run:
-                name: Create scan_net Network
-                command: docker network create scan_net
-            #- run:
-            #    name: Run Vulny Django
-            #    command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
-            - run:
-                name: Export Docker image as tar file
-                command: docker save vuln_django:latest > image.tar
+      deploy-application
+      # - fossa_test
+      # - stackhawk/hawkscan-local:
+      #     configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
+      #     docker-network: scan_net
+      #     app-id: 685847dd-0a74-4f02-b4d2-53f2396c93ed
+      #     steps:
+      #       - run:
+      #           name: Build Vulnarable Django
+      #           command: docker build -t vuln_django:latest .
+      #       - run:
+      #           name: Create scan_net Network
+      #           command: docker network create scan_net
+      #       #- run:
+      #       #    name: Run Vulny Django
+      #       #    command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
+      #       - run:
+      #           name: Export Docker image as tar file
+      #           command: docker save vuln_django:latest > image.tar

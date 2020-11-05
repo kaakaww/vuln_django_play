@@ -24,16 +24,17 @@ jobs:
     - checkout
     - run:
         name: Setup Heroku CLI
-        command: chmod +x scripts/setup_herokucli.sh
+        command: chmod +x scripts/setup_herokucli.sh && scripts/setup_herokucli.sh
 
 workflows:
   build-and-scan:
     jobs:
+      - deploy-application
       - fossa_test
       - stackhawk/hawkscan-local:
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
           docker-network: scan_net
-          app-id: 685847dd-0a74-4f02-b4d2-53f2396c93ed
+          app-id: a629eeae-4bb9-4918-b3eb-bb141b4e8918
           steps:
             - run:
                 name: Build Vulnarable Django
@@ -44,3 +45,6 @@ workflows:
             - run:
                 name: Run Vulny Django
                 command: docker run --detach --network scan_net --name vuln-django --rm vuln_django:latest
+            - run:
+                name: Export Docker image as tar file
+                command: docker save vuln_django:latest > image.tar

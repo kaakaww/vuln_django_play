@@ -1,5 +1,0 @@
-app:
-  env: ${BRANCH:gitlab-ci}
-  # The url of your application to scan
-  host: https://vuln-django.herokuapp.com # (required)
-  authentication: # auth disable for django auth behind https for now

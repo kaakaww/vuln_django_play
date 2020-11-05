@@ -2,9 +2,12 @@ version: 2.1
 
 orbs:
   stackhawk: stackhawk/stackhawk@1.0.1
+  secrethub: secrethub/cli@1.1.0
 
 jobs:
   fossa_test:
+    environment:
+      FOSSA_API_KEY: secrethub://webinar/appsec/fossa/api_key
     docker:
       - image: circleci/golang:1
     steps:
@@ -13,18 +16,24 @@ jobs:
           name: Install FOSSA cli
           command: |
             curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
-      - run:
+      - secrethub/exec:
+          step-name: FOSSA Analyze
           command: /usr/local/bin/fossa --no-ansi
-      - run:
+      - secrethub/exec:
+          step-name: FOSSA Test
           command: /usr/local/bin/fossa test --no-ansi
   deploy-application:
     working_directory: ~/project
     machine: true
+    environment:
+      HEROKU_API_KEY: secrethub://webinar/appsec/heroku/api_key
     steps:
     - checkout
-    - run:
-        name: Setup Heroku CLI
+
+    - secrethub/exec:
+        step-name: Setup Heroku CLI
         command: chmod +x scripts/setup_herokucli.sh && scripts/setup_herokucli.sh
+
 
 workflows:
   build-and-scan:
@@ -35,6 +44,10 @@ workflows:
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
           docker-network: scan_net
           app-id: a629eeae-4bb9-4918-b3eb-bb141b4e8918
+          pre-steps:
+            - secrethub/env-export:
+                var-name: HAWK_API_KEY
+                secret-path: webinar/appsec/stackhawk/api_key
           steps:
             - run:
                 name: Build Vulnarable Django

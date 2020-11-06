@@ -20,7 +20,7 @@ RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
     netcat
 WORKDIR /opt/app/vuln_django
-CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
+CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${PORT} --workers 3
 
 
 # Create a "dev" stage as the default final build target.
@@ -38,7 +38,8 @@ ENV DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
 ENV DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
 ENV DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
 
-EXPOSE ${SERVER_PORT}:${SERVER_PORT}
+# No expose in Heroku...
+# EXPOSE ${SERVER_PORT}:${SERVER_PORT}
 WORKDIR /opt/app
 
 RUN apt-get update && \

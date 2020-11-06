@@ -38,7 +38,7 @@ jobs:
         name: Load Docker image from tar file
         command: docker load --input image.tar
     - secrethub/exec:
-        step-name: Setup Heroku CLI
+        step-name: Deploy application
         command: chmod +x scripts/deploy.sh && scripts/deploy.sh
 
 workflows:

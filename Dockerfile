@@ -28,17 +28,16 @@ CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 #  - Runs data migrations and seeds poll data
 FROM base as dev
 
-ARG PORT=$PORT
+ARG SERVER_PORT=8020
 ARG DJANGO_SUPERUSER_USERNAME=admin
 ARG DJANGO_SUPERUSER_PASSWORD=adminpassword
 ARG DJANGO_SUPERUSER_EMAIL=admin@example.com
 
-ENV PORT=${PORT}
+ENV SERVER_PORT=${SERVER_PORT}
 ENV DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
 ENV DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
 ENV DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
 
-# No expose in Heroku.
 EXPOSE ${SERVER_PORT}:${SERVER_PORT}
 WORKDIR /opt/app
 
@@ -49,8 +48,6 @@ RUN apt-get update && \
 		less
 
 COPY ./nginx.default /etc/nginx/sites-available/default
-
-CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/sites-available/default
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log

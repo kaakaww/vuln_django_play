@@ -42,7 +42,6 @@ jobs:
 workflows:
   build-and-scan:
     jobs:
-      - deploy-application
       - fossa_test
       - stackhawk/hawkscan-local:
           configuration-files: ./stackhawk.yml ./stackhawk-circleci.yml
@@ -65,3 +64,10 @@ workflows:
             - run:
                 name: Export Docker image as tar file
                 command: docker save vuln_django:latest > image.tar
+            - persist_to_workspace:
+                  root: ~/project
+                  paths:
+                    - image.tar
+      - deploy-application:
+          requires:
+            - stackhawk/hawkscan-local

@@ -2,7 +2,7 @@
 # Used by the `dev` stage image from the Dockerfile in this repo
 
 server {
-  listen $port deferred;
+  listen $PORT deferred;
   server_name _;
 
   location / {

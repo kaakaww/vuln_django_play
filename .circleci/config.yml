@@ -29,6 +29,8 @@ jobs:
       HEROKU_API_KEY: secrethub://webinar/appsec/heroku/api_key
     steps:
     - checkout
+    - attach_workspace:
+          at: ~/project
     - secrethub/exec:
         step-name: Setup Heroku CLI
         command: chmod +x scripts/setup_herokucli.sh && scripts/setup_herokucli.sh

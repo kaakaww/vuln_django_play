@@ -17,7 +17,7 @@ jobs:
     - stage: build-and-test
       name: Build and Test
       env:
-        - APP_ID='830780ac-07be-4995-89d4-0645f1f0e95a'
+        - APP_ID='d023acb5-c8d4-426d-a572-148bfea653b4'
         - ENV='Travis CI'
         - APP_HOST='http://vuln-proxy:8020'
         - EXEC_CMD='docker-compose --file docker-micro.yml exec vuln-django'

@@ -45,7 +45,7 @@ jobs:
       - name: Create Scan Network
         run: docker network create scan_net
       - name: Build the Django Container
-        run: docker build -t vuln-django
+        run: docker build -t vuln-django .
       - name: Run the Django container
         run: docker run --detach -p 8020:8020 --network scan_net vuln-django
       - name: Run HawkScan

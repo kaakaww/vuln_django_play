@@ -1,3 +1,0 @@
-app:
-  applicationId: ${APP_ID}
-  host: http://vulny-django:8020

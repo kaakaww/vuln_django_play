@@ -4,7 +4,7 @@ on:
   pull_request:
 jobs:
   test:
-    runs-on:
+    runs-on: ubuntu-latest
     name: Python Tests
     container:
       image: python:3.7-buster

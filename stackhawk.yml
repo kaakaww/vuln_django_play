@@ -13,7 +13,7 @@ app:
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
-    - "/admin/logout/" # the scanner will log itself out if you don't ignore here
+    - "/admin/logout.*" # the scanner will log itself out if you don't ignore here
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an
@@ -65,6 +65,11 @@ app:
 #    # Enable the ajax spider for discovering your single page app
 #    ajax: false # (default)
 #    # Maximum time for spider to discover routes in your app
-#    maxDurationMinutes: 2 # (default)
+    maxDurationMinutes: 5
 #  # Maximum time to wait for the scanner to start up
 #  startupTimeoutMinutes: 5 # (default)
+
+  config:
+    - "spider.processform=true"
+    - "spider.postform=false"
+    - "spider.handleParameters=IGNORE_VALUE"

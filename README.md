@@ -1,3 +1,4 @@
+![Build Status](https://github.com/sgerlach/vuln_django_play/workflows/Tests/badge.svg)
 =====
 Vulnerable Polls
 =====

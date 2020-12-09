@@ -69,6 +69,9 @@ app:
 #  # Maximum time to wait for the scanner to start up
 #  startupTimeoutMinutes: 5 # (default)
 
+
+hawk:
+  failureThreshold: high
   config:
     - "spider.processform=true"
     - "spider.postform=false"

@@ -9,16 +9,17 @@ jobs:
     container:
       image: python:3.7-buster
     steps:
-      run: |
-          # This configures the test stuff
-          apt-get update -qy
-          apt-get install -y python-dev python-pip
-          pip install -r requirements.txt
-          python manage.py migrate
-          python manage.py test
-          coverage run --source='.' manage.py test
-          coverage report -m
-          coverage-badge
+      - name: Run the Python Tests
+        run: |
+            # This configures the test stuff
+            apt-get update -qy
+            apt-get install -y python-dev python-pip
+            pip install -r requirements.txt
+            python manage.py migrate
+            python manage.py test
+            coverage run --source='.' manage.py test
+            coverage report -m
+            coverage-badge
 
   synk:
     name: Snyk SCA

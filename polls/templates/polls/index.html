@@ -33,7 +33,7 @@
 
   <div class="col">
     <p>also if you'd like to search for some stuff do it here</p>
-    <form action="{% url 'polls:search' %}" method="post">
+    <form action="{% url 'polls:search' %}" method="post">{% csrf_token %}
       <input type="text" name="search_string" id="search_string" value="">
       <input type="submit" value="Search">
     </form>

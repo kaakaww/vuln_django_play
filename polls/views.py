@@ -42,26 +42,26 @@ class ResultsView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     context = { 'latest_question_list': latest_question_list, }
     return render(request, 'polls/index.html', context)
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/results.html', {'question': question})
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def results(request, question_id):
     response = "You're looking at the results of question %s."
     return HttpResponse(response % question_id)
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -81,7 +81,7 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def inject(request, injector_str):
     response = "You're looking at the page that handles injection of %s"
     return render(request, 'polls/injector.html', {
@@ -89,7 +89,7 @@ def inject(request, injector_str):
     })
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def sql_injector(request, ):
     sql_str = request.GET.get('sql')
     prepared_sql = request.GET['sql']
@@ -103,7 +103,7 @@ def sql_injector(request, ):
     }) #HttpResponse("Ohh, my DB info, yeah it's here: " + str(sql_results))
 
 
-@csrf_exempt
+"""@csrf_exempt"""
 def search(request, ):
     search_str = request.POST.get('search_string', 'found nothing in search')
     return render(request, 'polls/search_detail.html', {'search_string': search_str,})

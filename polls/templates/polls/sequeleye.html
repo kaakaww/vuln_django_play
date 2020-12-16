@@ -20,7 +20,7 @@
 <div class="row mt-4">
   <div class="col">
     Try Again?:
-    <form class="form" method="get" action="/polls/sql/">
+    <form class="form" method="get" action="/polls/sql/">{% csrf_token %}
       <div class="form-group">
         <label for="sql">DB Query</label>
         <input type="string" class="form-control" id="sql" name="sql" aria-describedby="SQLi">

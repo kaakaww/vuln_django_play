@@ -76,3 +76,4 @@ hawk:
   appmaxDurationMinutes: 5
   config:
     - "spider.processform=true"
+    - "spider.handleParameters=IGNORE_VALUE"

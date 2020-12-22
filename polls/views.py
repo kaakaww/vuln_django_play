@@ -91,8 +91,11 @@ def inject(request, injector_str):
 
 """@csrf_exempt"""
 def sql_injector(request, ):
-    sql_str = request.GET.get('sql')
-    prepared_sql = request.GET['sql']
+    if request.method == 'POST':
+        sql_str = request.POST.get('sql')
+    else:
+        sql_str = request.GET.get('sql')
+    prepared_sql = "select questions_text from polls_question where id = '" + sql_str + "'"
     cursor = connection.cursor()
     cursor.execute(prepared_sql)
     sql_results = cursor.fetchall()

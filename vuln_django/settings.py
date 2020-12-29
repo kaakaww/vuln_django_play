@@ -76,6 +76,14 @@ WSGI_APPLICATION = 'vuln_django.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgresql',
+        'USER': 'postgresql',
+        'PASSWORD': 'postgresql',
+        'HOST': 'db',
+        'PORT': '5432'
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -135,7 +143,7 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['console'],
-            'level': 'DEBUG',  # change debug level as appropiate
+            'level': 'INFO',  # change debug level as appropiate
             'propagate': False,
         },
     },

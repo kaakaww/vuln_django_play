@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5342:5342"
+    environment:
+      - POSTGRES_DB=postgresql
+      - POSTGRES_USER=postgresql
+      - POSTGRES_PASSWORD=postgresql
+
+  web:
+    image: app
+    command: /opt/app/start-server.sh
+    ports:
+      - "8020:8020"
+    links:
+      - db
+    depends_on:
+      - migration
+      - db
+
+  migration:
+    build: .
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=adminpassword
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+    image: app
+    command: >
+      bash -c "python vuln_django/manage.py migrate
+      && python vuln_django/manage.py createsuperuser --no-input
+      && chown -R www-data:www-data /opt/app
+      && python vuln_django/manage.py seed polls --number=5"
+    links:
+      - db
+    depends_on:
+      - db
+    restart: on-failure

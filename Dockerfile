@@ -1,7 +1,8 @@
 # Dockerfile
 
 # FROM directive instructing base image to build on
-FROM python:3.7-buster
+FROM python:3
+ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install nginx vim ssh -y --no-install-recommends
 
@@ -22,15 +23,15 @@ COPY polls/ /opt/app/vuln_django/polls
 COPY manage.py /opt/app/vuln_django/
 WORKDIR /opt/app
 RUN pip install -r requirements.txt \
-&& chown -R www-data:www-data /opt/app \
-&& python vuln_django/manage.py migrate
+&& chown -R www-data:www-data /opt/app
+# && python vuln_django/manage.py migrate
 ENV DJANGO_SUPERUSER_USERNAME=admin
 ENV DJANGO_SUPERUSER_PASSWORD=adminpassword
 ENV DJANGO_SUPERUSER_EMAIL=admin@example.com
-RUN python vuln_django/manage.py createsuperuser --no-input \
-&& chown -R www-data:www-data /opt/app \
-&& python vuln_django/manage.py seed polls --number=5
+# RUN python vuln_django/manage.py createsuperuser --no-input \
+RUN chown -R www-data:www-data /opt/app
+# && python vuln_django/manage.py seed polls --number=5
 
 EXPOSE 8020
 STOPSIGNAL SIGTERM
-CMD ["/opt/app/start-server.sh"]
+# CMD ["/opt/app/start-server.sh"]

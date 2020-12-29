@@ -11,7 +11,7 @@ app:
   appDataType: PII # (optional)
 
 #  # The name of your anti csrf parameter
-  antiCsrfParam: csrfmiddlewaretoken # (optional)
+  #antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
     - "/admin/logout.*" # the scanner will log itself out if you don't ignore here
 #

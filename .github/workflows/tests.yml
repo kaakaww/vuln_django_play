@@ -44,20 +44,14 @@ jobs:
         uses: actions/checkout@v2
       - name: StackHawk Container Pull
         run: docker pull stackhawk/hawkscan:latest
-      - name: Create Scan Network
-        run: docker network create scan_net
-      - name: Build the Django Container
-        run: docker build -t vuln-django .
-      - name: Run the Django container
-        run: >
-          docker run --detach -p 8020:8020 --name vuln-django
-          --network scan_net vuln-django
+      - name: Run the Vuln Django Containers
+        run: docker-compose up -d
       - name: Run HawkScan
         env:
           API_KEY: ${{secrets.HAWK_API_KEY}}
         run: >
           docker run --volume $(pwd):/hawk:rw --tty --rm
-          --network scan_net
+          --network vuln_django_play_default
           --env API_KEY="${API_KEY}"
           --env NO_COLOR=true
           stackhawk/hawkscan stackhawk.yml stackhawk-github.yml

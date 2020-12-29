@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=postgresql
       - POSTGRES_PASSWORD=postgresql
 
-  web:
+  vuln-django:
     image: app
     command: /opt/app/start-server.sh
     ports:

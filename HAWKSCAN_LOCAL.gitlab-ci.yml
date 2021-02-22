@@ -7,8 +7,7 @@ hawkscan:
     - docker info
     - apk update
     - apk upgrade
-    - apk add python python-dev py-pip build-base
-    - pip install docker-compose
+    - apk add --no-cache docker-compose
 
   variables:
     GIT_STRATEGY: fetch

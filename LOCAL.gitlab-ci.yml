@@ -20,5 +20,5 @@ docker-build:
   script:
    - env
    - docker build -t $HAWK_APP_IMAGE .
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-   - docker push $HAWK_APP_IMAGE
+#   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#   - docker push $HAWK_APP_IMAGE

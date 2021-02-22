@@ -14,7 +14,7 @@ hawkscan:
   allow_failure: true
   script:
     - docker pull stackhawk/hawkscan:latest
-    - docker-compose up -d .
+    - docker-compose up -d
 
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm \

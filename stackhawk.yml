@@ -5,6 +5,8 @@ app:
   env: Development
   # The url of your application to scan
   host: http://localhost:8020 # (required)``
+
+
   # The risk level of the app
   riskLevel: MEDIUM # (optional)
   # The type of data sensitivity the web app mantains
@@ -14,6 +16,11 @@ app:
   #antiCsrfParam: csrfmiddlewaretoken # (optional)
   excludePaths:
     - "/admin/logout.*" # the scanner will log itself out if you don't ignore here
+
+  #includePaths:
+  #  - "/"
+  #  - "/polls.*"
+  #  - ""
 #
 #  # Form POST based authentication configuration for scanning as a user.
 #  # Enabling will force the scanner to scan as an

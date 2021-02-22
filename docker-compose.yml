@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     ports:
-      - "5342:5342"
+      - "5432:5432"
     environment:
       - POSTGRES_DB=postgresql
       - POSTGRES_USER=postgresql

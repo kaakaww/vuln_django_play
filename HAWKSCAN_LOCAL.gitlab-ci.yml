@@ -7,15 +7,12 @@ hawkscan:
     GIT_STRATEGY: fetch
   allow_failure: true
   script:
-#    - env
-#    - chmod o+rw $(pwd)
     - docker pull stackhawk/hawkscan:latest
     - docker-compose up -d .
-#    - docker run --detach -p $HAWK_APP_PORT:$HAWK_APP_PORT --network scan_net --name $HAWK_APP_SVC_NAME --rm $HAWK_APP_IMAGE
+
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm \
         --network vuln_django_play_default \
-#        --env DAST_ARTIFACT=1 \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         stackhawk/hawkscan:latest $HAWKSCAN_ARGS
   artifacts:

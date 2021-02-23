@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'postgresql',
         'USER': 'postgresql',
         'PASSWORD': 'postgresql',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432'
     },
     'sqlite': {

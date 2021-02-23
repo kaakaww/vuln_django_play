@@ -15,7 +15,6 @@ hawkscan:
   script:
     - docker pull stackhawk/hawkscan:latest
     - docker-compose up -d
-
     - |
       docker run --volume $(pwd):/hawk:rw --tty --rm \
         --network vuln_django_play_default \

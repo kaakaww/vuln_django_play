@@ -55,6 +55,4 @@ hawkscan:
         --network vuln_django_play_default \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         stackhawk/hawkscan:latest $HAWKSCAN_ARGS
-  artifacts:
-    reports:
-      dast: stackhawk-dast-report.json
+  

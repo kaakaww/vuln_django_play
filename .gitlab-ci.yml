@@ -46,7 +46,7 @@ hawkscan:
 
   variables:
     GIT_STRATEGY: fetch
-  allow_failure: true
+  allow_failure: false
   script:
     - docker pull stackhawk/hawkscan:latest
     - docker-compose up -d
@@ -55,4 +55,3 @@ hawkscan:
         --network vuln_django_play_default \
         --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
         stackhawk/hawkscan:latest $HAWKSCAN_ARGS
-  

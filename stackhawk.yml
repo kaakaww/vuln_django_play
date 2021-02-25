@@ -7,6 +7,7 @@ app:
   host: http://localhost:8020 # (required)``
 
 
+
   # The risk level of the app
   riskLevel: MEDIUM # (optional)
   # The type of data sensitivity the web app mantains

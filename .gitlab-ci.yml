@@ -1,3 +1,60 @@
-include:
-#  - local: BASE.gitlab-ci.yml
-  - local: LOCAL.gitlab-ci.yml
+variables:
+  HAWK_APP_IMAGE: $CI_REGISTRY_IMAGE
+  HAWK_APP_SVC_NAME: vuln-django
+  HAWK_APP_PORT: 8020
+  HAWKSCAN_ARGS: "stackhawk.yml stackhawk-gitlab.yml"
+
+stages:
+  - test
+  - build
+  - hawkscan
+#test:
+#  stage: test
+#  image: python:3.7-buster
+#  script:
+    # This configures the test stuff
+#    - apt-get update -qy
+#    - apt-get install -y python-dev python-pip
+#    - pip install -r requirements.txt
+#    - python manage.py migrate
+#    - python manage.py test
+#    - coverage run --source='.' manage.py test
+#    - coverage report -m
+#    - coverage-badge
+#  coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
+
+docker-build:
+  stage: build
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  script:
+   - env
+   - docker build -t $HAWK_APP_IMAGE .
+#   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#   - docker push $HAWK_APP_IMAGE
+hawkscan:
+  stage: hawkscan
+  services:
+    - docker:dind
+  image: docker:latest
+  before_script:
+    - docker info
+    - apk update
+    - apk upgrade
+    - apk add --no-cache docker-compose
+
+  variables:
+    GIT_STRATEGY: fetch
+  allow_failure: true
+  script:
+    - docker pull stackhawk/hawkscan:latest
+    - docker-compose up -d
+    - |
+      docker run --volume $(pwd):/hawk:rw --tty --rm \
+        --network vuln_django_play_default \
+        --env API_KEY="hawk.${HAWK_API_ID}.${HAWK_API_SECRET}" \
+        stackhawk/hawkscan:latest $HAWKSCAN_ARGS
+  artifacts:
+    reports:
+      dast: stackhawk-dast-report.json

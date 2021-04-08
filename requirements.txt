@@ -1,7 +1,7 @@
 asgiref==3.2.3
 certifi==2019.11.28
 chardet==3.0.4
-Django==3.0.4
+Django==3.0.14
 django-seed==0.2.2
 entrypoints==0.3
 Faker==4.0.2

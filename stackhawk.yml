@@ -4,13 +4,6 @@ app:
   env: ${APP_ENV:Development}
   # The url of your application to scan
   host: ${HOST:http://localhost:8020} # (required)
-  # Our scanner's capability is still in Alpha; If we notice a bug we'll use this email to reach out or provide a fix.
-  # We will never use this contact for marketing purposes.
-  contactEmail: scott.gerlach@sterkherk.kerm # (optional)
-  # The risk level of the app
-  riskLevel: MEDIUM # (optional)
-  # The type of data sensitivity the web app maintains
-  appDataType: PII # (optional)
 
 #  # The name of your anti csrf parameter
   antiCsrfParam: csrfmiddlewaretoken # (optional)

@@ -25,3 +25,4 @@ urllib3==1.25.8
 coverage==5.0.4
 coverage-badge==1.0.1
 django-request-logging==0.7.1
+setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability

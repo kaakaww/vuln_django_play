@@ -6,7 +6,7 @@ django-seed==0.2.2
 entrypoints==0.3
 Faker==4.0.2
 flake8==3.7.9
-gunicorn==20.0.4
+gunicorn==23.0.0
 idna==2.9
 Markdown==3.2.1
 martor==1.4.7

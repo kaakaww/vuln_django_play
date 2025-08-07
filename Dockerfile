@@ -1,5 +1,13 @@
 # Create the "base" stage
-FROM python:3.7-buster as base
+FROM python:3.9-slim AS base
+
+# Install system dependencies needed for building Python packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    default-libmysqlclient-dev \
+    libpq-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt start-server.sh /opt/app/
 COPY vuln_django/ /opt/app/vuln_django/vuln_django
@@ -8,11 +16,12 @@ COPY templates/ /opt/app/vuln_django/templates
 COPY polls/ /opt/app/vuln_django/polls
 COPY manage.py /opt/app/vuln_django/
 
+RUN pip install --upgrade pip
 RUN pip install -r /opt/app/requirements.txt
 
 
 # Create a "micro" stage to run as a gunicorn container
-FROM base as micro
+FROM base AS micro
 ARG SERVER_PORT=8010
 ENV SERVER_PORT=${SERVER_PORT}
 EXPOSE ${SERVER_PORT}:${SERVER_PORT}
@@ -26,7 +35,7 @@ CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 # Create a "dev" stage as the default final build target.
 #  - Includes sqlite and nginx
 #  - Runs data migrations and seeds poll data
-FROM base as dev
+FROM base AS dev
 
 ARG SERVER_PORT=8020
 ARG DJANGO_SUPERUSER_USERNAME=admin

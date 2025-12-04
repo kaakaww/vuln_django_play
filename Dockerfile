@@ -25,9 +25,6 @@ FROM base AS micro
 ARG SERVER_PORT=8010
 ENV SERVER_PORT=${SERVER_PORT}
 EXPOSE ${SERVER_PORT}:${SERVER_PORT}
-RUN apt-get update && \
-	apt-get install -y --no-install-recommends \
-    netcat
 WORKDIR /opt/app/vuln_django
 CMD exec gunicorn vuln_django.wsgi --bind 0.0.0.0:${SERVER_PORT} --workers 3
 

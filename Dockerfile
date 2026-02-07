@@ -1,5 +1,5 @@
 # Create the "base" stage
-FROM python:3.9-slim AS base
+FROM python:3.14.3-slim AS base
 
 # Install system dependencies needed for building Python packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
